@@ -1,0 +1,24 @@
+<section>
+
+    <h2>Codificar / Decodificar texto</h2>
+    <div>
+        <label for="base64decode">Codificar</label>
+        <textarea id="base64decode" rows="10" placeholder="Ingresa el texto a codificar"
+            [(ngModel)]="decodeText"></textarea>
+    </div>
+
+    <div>
+        <button type="button" (click)="encode()">Codificar</button>
+    </div>
+
+    <div>
+        <button type="button" (click)="decode()">Decodificar</button>
+    </div>
+
+    <div>
+        <label for="base64encode">Decodificar</label>
+        <textarea id="base64encode" rows="10" placeholder="Ingresa el texto a decodificar"
+            [(ngModel)]="encodeText"></textarea>
+    </div>
+
+</section>
