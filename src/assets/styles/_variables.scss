@@ -1,0 +1,29 @@
+:root {
+  --background-color: #fff;
+
+  // Base color
+  --base-color: #E9ECEF;
+  --base-color-light: #f3f3f3;
+  --base-color-dark: rgb(219, 0, 0);
+
+  // Primary color
+  --primary-color: #343A40;
+  --primary-color-contrast: #fff;
+  --primary-color-light: #566069;
+  --primary-color-dark: rgb(219, 0, 0);
+
+  // Secondary color
+  --secondary-color: blue;
+  --secondary-color-light: rgb(253, 139, 139);
+  --secondary-color-dark: rgb(219, 0, 0);
+
+  // Border color
+  --border-color: lightgray;
+  --border-color-focus: gray;
+
+  // Hover
+  --base-hover-color: #fafafa;
+
+  // Radius
+  --base-radius: 5px;
+}

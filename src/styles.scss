@@ -1,1 +1,21 @@
 /* You can add global styles to this file, and also import other style files */
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+@use "assets/styles/variables";
+@use "assets/styles/normalize";
+@use "assets/styles/custom-elements";
+
+// Import components
+@use "assets/styles/button";
+
+@font-face {
+  font-family: "Mona-Sans";
+  src: url("assets/fonts/Mona-Sans.woff2");
+}
+
+body {
+  font-family: "Mona-Sans";
+  background: var(--background-color);
+}

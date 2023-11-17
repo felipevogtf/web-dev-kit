@@ -1,0 +1,29 @@
+.main-section {
+  display: grid;
+  min-height: 100vh;
+  grid-template-columns: minmax(200px, 1fr) minmax(100px, 11fr);
+
+  &__sidenav {
+    background-color: lightcoral;
+  }
+
+  &__content {
+    //background-color: global.$background-color;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    overflow: auto;
+    box-sizing: border-box;
+  }
+
+  &__content--padding {
+    padding: 15px;
+  }
+}
+
+@media (max-width: 600px) {
+  .main-section {
+    grid-template-columns: 1fr;
+    grid-template-rows: 50px;
+  }
+}
