@@ -1,0 +1,68 @@
+/* Solid button */
+.button {
+  background: var(--base-color);
+  border: none;
+  border-radius: var(--base-radius);
+  width: 200px;
+  height: 50px;
+
+  min-width: 50px;
+  max-width: 100%;
+
+  transition: transform 100ms ease-in, background 100ms ease-in,
+    border 100ms ease-in;
+
+  &:hover {
+    cursor: pointer;
+    background: var(--base-color-light);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+.button--full {
+  width: 100%;
+}
+
+/* Modifier: button--color-primary */
+.button--primary {
+  background: var(--primary-color);
+  color: var(--primary-color-contrast);
+
+  &:hover {
+    background: var(--primary-color-light);
+  }
+}
+
+/* Modifier: button--color-secondary */
+.button--secondary {
+  background: var(--secondary-color);
+
+  &:hover {
+    background: var(--secondary-color-light);
+  }
+}
+
+/* Icon button */
+.icon-button {
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+
+  height: 50px;
+  width: 50px;
+
+  transition: transform 100ms ease-in, background 100ms ease-in,
+    border 100ms ease-in;
+
+  &:hover {
+    cursor: pointer;
+    background: var(--base-color-light);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+}

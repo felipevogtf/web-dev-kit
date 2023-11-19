@@ -1,4 +1,9 @@
-.asd{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+.form-control {
+  margin-bottom: 100px;
+
+  .button {
+    display: block;
+    margin: auto;
+    margin-top: 20px;
+  }
 }

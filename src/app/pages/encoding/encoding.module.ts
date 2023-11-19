@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Base64Component } from './base64/base64.component';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { TextareaComponent } from '../../components/textarea/textarea.component';
 
 const routes: Routes = [
   {
@@ -22,7 +23,8 @@ const routes: Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    FormsModule
+    FormsModule,
+    TextareaComponent
   ]
 })
 export class EncodingModule { }

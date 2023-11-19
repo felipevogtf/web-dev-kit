@@ -1,4 +1,45 @@
 div {
   margin-top: 20px;
-  margin-bottom: 20px   ;
+  margin-bottom: 20px;
+}
+
+/* Estilos básicos */
+.sidebar {
+  height: 100%;
+  width: 250px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #333;
+  padding-top: 20px;
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar ul li {
+  border-bottom: 1px solid #555;
+}
+
+.sidebar ul li a {
+  display: block;
+  color: white;
+  text-decoration: none;
+  padding: 8px 16px;
+}
+
+.sidebar ul li a:hover {
+  background-color: #555;
+}
+
+/* Estilos para elementos desplegables */
+.dropdown-content {
+  display: none;
+}
+
+.dropdown-toggle:checked ~ .dropdown-content {
+  display: block;
 }

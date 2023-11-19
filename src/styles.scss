@@ -5,10 +5,9 @@
 */
 @use "assets/styles/variables";
 @use "assets/styles/normalize";
-@use "assets/styles/custom-elements";
 
 // Import components
-@use "assets/styles/buttons";
+@use "assets/styles/components/index";
 
 @font-face {
   font-family: "Mona-Sans";

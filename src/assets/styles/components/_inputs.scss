@@ -1,7 +1,7 @@
 /*
 Text Area 
 */
-textarea {
+.textarea {
   outline: none;
   font-family: inherit;
   width: 100%;
@@ -14,20 +14,20 @@ textarea {
   transition-property: background, border;
   transition-duration: 100ms;
   transition-timing-function: ease-in;
-}
 
-textarea:focus-visible {
-  border: solid 1px var(--border-color-focus);
-}
+  &:focus-visible {
+    border: solid 1px var(--border-color-focus);
+  }
 
-textarea:hover {
-  background: var(--base-hover-color);
+  &:hover {
+    background: var(--base-hover-color);
+  }
 }
 
 /* 
-Input
+  Input
 */
-input {
+.input {
   outline: none;
   font-family: inherit;
   width: 100%;
@@ -40,12 +40,12 @@ input {
   transition-property: background, border;
   transition-duration: 100ms;
   transition-timing-function: ease-in;
-}
 
-input:focus-visible {
-  border: solid 1px var(--border-color-focus);
-}
+  &:focus-visible {
+    border: solid 1px var(--border-color-focus);
+  }
 
-input:hover {
-  background: var(--base-hover-color);
+  &:hover {
+    background: var(--base-hover-color);
+  }
 }
