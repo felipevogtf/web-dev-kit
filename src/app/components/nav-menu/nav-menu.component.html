@@ -1,0 +1,22 @@
+<aside class="nav">
+    <div class="nav__header">
+        AJSDJASDJ
+
+        <button class="nav__toggle" (click)="toggle()">asdsa</button>
+    </div>
+
+    <div class="nav__overlay" [class.nav__overlay--visible]="isToggle" (click)="toggle()"></div>
+
+    <ul class="nav__menu" [class.nav__menu--visible]="isToggle">
+        <li class="nav__item">
+            <span class="nav__item nav__link" tabindex="0">base64</span>
+            <ul class="nav__submenu">
+                <li class="nav__item nav__link">test</li>
+                <li class="nav__item nav__link">test 2</li>
+            </ul>
+        </li>
+        <li class="nav__item nav__link">test</li>
+        <li class="nav__item nav__link">test 2</li>
+    </ul>
+
+</aside>

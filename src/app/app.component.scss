@@ -4,11 +4,12 @@
   grid-template-columns: minmax(200px, 1fr) minmax(100px, 11fr);
 
   &__sidenav {
-    background-color: lightcoral;
+    padding: 0;
+    margin: 0;
+    border-right: 1px solid var(--border-color);
   }
 
   &__content {
-    //background-color: global.$background-color;
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
@@ -25,5 +26,10 @@
   .main-section {
     grid-template-columns: 1fr;
     grid-template-rows: 50px;
+
+    &__sidenav {
+      border-right: none;
+      border-bottom: 1px solid var(--border-color);
+    }
   }
 }
