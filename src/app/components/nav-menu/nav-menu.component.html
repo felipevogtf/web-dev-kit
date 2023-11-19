@@ -1,22 +1,35 @@
 <aside class="nav">
     <div class="nav__header">
-        AJSDJASDJ
-
-        <button class="nav__toggle" (click)="toggle()">asdsa</button>
+        <button class="nav__toggle icon-button" (click)="toggle()"><fa-icon icon="bars"></fa-icon></button>
+        <span> WebDevKit</span>
     </div>
 
     <div class="nav__overlay" [class.nav__overlay--visible]="isToggle" (click)="toggle()"></div>
 
     <ul class="nav__menu" [class.nav__menu--visible]="isToggle">
+
+        @for (menu of menus; track menu.id) {
         <li class="nav__item">
-            <span class="nav__item nav__link" tabindex="0">base64</span>
+            <div class="nav__item nav__link" (click)="test(menu)">
+                <fa-icon [icon]="menu.icon"></fa-icon>
+                <span>{{menu.title}}</span>
+                @if (menu.childs) {
+                <fa-icon icon="angle-down" class="nav__dropdown" [class.nav__dropdown--rotate]="menu.toggle"></fa-icon>
+                }
+            </div>
+
+            @if (menu.childs && menu.toggle) {
             <ul class="nav__submenu">
-                <li class="nav__item nav__link">test</li>
-                <li class="nav__item nav__link">test 2</li>
+
+                @for (child of menu.childs; track $index) {
+                <li class="nav__item nav__link" (click)="test(child)"><fa-icon
+                        [icon]="child.icon"></fa-icon>{{child.title}}</li>
+                }
             </ul>
+            }
+
         </li>
-        <li class="nav__item nav__link">test</li>
-        <li class="nav__item nav__link">test 2</li>
+        }
     </ul>
 
 </aside>

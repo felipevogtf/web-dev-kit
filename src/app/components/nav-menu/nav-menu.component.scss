@@ -1,6 +1,5 @@
-.nav {
+.nav { 
   &__menu {
-    position: relative;
     padding: 0;
     margin: 0;
     display: flex;
@@ -9,8 +8,12 @@
     background: var(--background-color);
   }
 
-  &__logo {
+  &__header {
     height: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
 
   &__toggle {
@@ -22,19 +25,35 @@
     display: flex;
     flex-direction: column;
     row-gap: 10px;
+
+    .nav__link {
+      padding-left: 40px;
+    }
+  }
+
+  &__dropdown {
+    margin-left: auto;
+    transition: transform 300ms ease-in 10ms;
+
+    &--rotate {
+      transform: rotate(-180deg);
+    }
   }
 
   &__item {
     list-style: none;
-
-    // &:focus + .nav__submenu {
-    //   display: block;
-    // }
   }
 
   &__link {
-    display: block;
+    display: flex;
     padding: 10px 20px;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 10px;
+
+    fa-icon {
+      font-size: 0.8em;
+    }
     &:hover {
       background-color: var(--border-color);
     }
@@ -44,10 +63,10 @@
 @media screen and (max-width: 600px) {
   .nav {
     &__header {
-      height: 50px;
       display: flex;
       flex-direction: row;
       align-items: center;
+      justify-content: flex-start;
     }
 
     &__menu {
@@ -63,15 +82,16 @@
     &__menu--visible {
       transform: none;
       transition: transform 300ms ease-in;
+      box-shadow: 10px 30px 20px 0px rgba(0, 0, 0, 0.3);
     }
 
     &__overlay {
-      position: absolute;
+      position: fixed;
       width: 100%;
-      height: calc(100% - 50px);
+      height: 100vh;
       background: black;
       opacity: 0;
-
+      z-index: 1;
       display: none;
     }
 
