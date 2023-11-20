@@ -1,14 +1,11 @@
-import { Component, Input, ViewChild, forwardRef } from '@angular/core';
+import { Component, Input, forwardRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   ControlValueAccessor,
   FormsModule,
   NG_VALUE_ACCESSOR,
 } from '@angular/forms';
-import {
-  FaIconComponent,
-  FontAwesomeModule,
-} from '@fortawesome/angular-fontawesome';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {
   IconDefinition,
   faClipboard,
@@ -33,8 +30,6 @@ export class TextareaComponent implements ControlValueAccessor {
   @Input() id!: string;
   @Input() placeholder: string = '';
   @Input() label!: string;
-
-  @ViewChild('iconRef') iconRef!: FaIconComponent;
 
   value: string = '';
   iconClip: IconDefinition = faClipboard;
