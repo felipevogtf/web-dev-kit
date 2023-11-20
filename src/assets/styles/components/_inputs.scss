@@ -11,7 +11,7 @@ Text Area
   box-sizing: border-box;
   border: solid 1px var(--border-color);
 
-  transition-property: background, border;
+  transition-property: background-color, border;
   transition-duration: 100ms;
   transition-timing-function: ease-in;
 
@@ -20,7 +20,7 @@ Text Area
   }
 
   &:hover {
-    background: var(--base-hover-color);
+    background-color: var(--base-hover-color);
   }
 }
 
@@ -31,13 +31,14 @@ Text Area
   outline: none;
   font-family: inherit;
   width: 100%;
+  height: 60px;
   border-radius: var(--base-radius);
   resize: none;
   padding: 5px;
   box-sizing: border-box;
   border: solid 1px var(--border-color);
 
-  transition-property: background, border;
+  transition-property: background-color, border;
   transition-duration: 100ms;
   transition-timing-function: ease-in;
 
@@ -46,6 +47,10 @@ Text Area
   }
 
   &:hover {
-    background: var(--base-hover-color);
+    background-color: var(--base-hover-color);
+  }
+
+  &:read-only {
+    background-color: var(--base-hover-color);
   }
 }
