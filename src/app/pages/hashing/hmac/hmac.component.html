@@ -1,0 +1,32 @@
+<section>
+    <h2>Generador de HMACs</h2>
+
+    <div class="form-control">
+        <custom-textarea [id]="'hashText'" [label]="'Entrada'" [placeholder]="'Entrada'" [(ngModel)]="hashText"
+            (ngModelChange)="encode()" />
+    </div>
+
+    <div class="form-control">
+        <custom-input [id]="'secret'" [label]="'Clave secreta'" [placeholder]="'Clave secreta'" [(ngModel)]="secret"
+            (ngModelChange)="encode()" />
+    </div>
+
+
+    <div class="form-control">
+        <custom-input [id]="'md5'" [label]="'MD5'" [placeholder]="'MD5'" [(ngModel)]="md5text" [readonly]="true" />
+    </div>
+
+    <div class="form-control">
+        <custom-input [id]="'sha1'" [label]="'SHA1'" [placeholder]="'SHA1'" [(ngModel)]="sha1text" [readonly]="true" />
+    </div>
+
+    <div class="form-control">
+        <custom-input [id]="'sha256'" [label]="'SHA256'" [placeholder]="'SHA256'" [(ngModel)]="sha256text"
+            [readonly]="true" />
+    </div>
+
+    <div class="form-control">
+        <custom-input [id]="'sha512'" [label]="'SHA512'" [placeholder]="'SHA512'" [(ngModel)]="sha512text"
+            [readonly]="true" />
+    </div>
+</section>
