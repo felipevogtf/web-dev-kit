@@ -13,7 +13,12 @@ export const routes: Routes = [
       import('./pages/encoding/encoding.module').then((m) => m.EncodingModule),
   },
   {
-    path: '**', 
-    component: NotFoundComponent
-  }
+    path: 'hashing',
+    loadChildren: () =>
+      import('./pages/hashing/hashing.module').then((m) => m.HashingModule),
+  },
+  {
+    path: '**',
+    component: NotFoundComponent,
+  },
 ];

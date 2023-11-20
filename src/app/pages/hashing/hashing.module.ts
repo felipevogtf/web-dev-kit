@@ -1,30 +1,25 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Base64Component } from './base64/base64.component';
+import { HashingComponent } from './hashing/hashing.component';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { TextareaComponent } from '../../components/textarea/textarea.component';
 import { InputComponent } from '../../components/input/input.component';
-import { UrlComponent } from './url/url.component';
+import { TextareaComponent } from '../../components/textarea/textarea.component';
+import { HmacComponent } from './hmac/hmac.component';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'base64',
-    pathMatch: 'full',
+    component: HashingComponent,
   },
   {
-    path: 'base64',
-    component: Base64Component,
-  },
-  {
-    path: 'url',
-    component: UrlComponent,
+    path: 'hmac',
+    component: HmacComponent,
   },
 ];
 
 @NgModule({
-  declarations: [Base64Component, UrlComponent],
+  declarations: [HashingComponent, HmacComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
@@ -33,4 +28,4 @@ const routes: Routes = [
     InputComponent,
   ],
 })
-export class EncodingModule {}
+export class HashingModule {}

@@ -8,6 +8,8 @@ import {
   faAngleDown,
   faBars,
   faCode,
+  faGlobe,
+  faHashtag,
   faKey,
   faLock,
 } from '@fortawesome/free-solid-svg-icons';
@@ -36,32 +38,27 @@ export class NavMenuComponent {
           link: '/encoding/base64',
         },
         {
-          icon: faCode,
-          title: 'Base 64',
-          link: '/',
+          icon: faGlobe,
+          title: 'URL',
+          link: '/encoding/url',
         },
       ],
     },
     {
       id: 2,
-      icon: faCode,
-      title: 'Encodode / Decode',
+      icon: faHashtag,
+      title: 'Hashing',
       toggle: false,
       childs: [
         {
-          icon: faCode,
-          title: 'Base 64',
-          link: '/',
+          icon: faHashtag,
+          title: 'Hash',
+          link: '/hashing',
         },
         {
-          icon: faCode,
-          title: 'Base 64',
-          link: '/',
-        },
-        {
-          icon: faCode,
-          title: 'Base 64',
-          link: '/',
+          icon: faHashtag,
+          title: 'HMAC',
+          link: '/hashing/hmac',
         },
       ],
     },
@@ -71,6 +68,7 @@ export class NavMenuComponent {
       title: 'test',
       toggle: false,
       childs: null,
+      link: '/',
     },
   ];
 
