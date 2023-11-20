@@ -29,3 +29,4 @@ jobs:
         with:
           branch: gh-pages  # Cambia esto si estás usando una rama diferente para GitHub Pages
           folder: dist/web-dev-kit/browser  # Reemplaza 'nombre-app' con el nombre de tu carpeta de distribución después del build
+          token: ${{ secrets.GITHUB_TOKEN }}
