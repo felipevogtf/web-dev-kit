@@ -1,0 +1,13 @@
+<section>
+    <h2>Codificar / Decodificar texto en URL</h2>
+
+    <div class="form-control">
+        <custom-textarea [id]="'uri-decode'" [label]="'Codificar'" [placeholder]="'Ingresa el texto a codificar'"
+            [(ngModel)]="decodeText" (ngModelChange)="encode()" />
+    </div>
+
+    <div class="form-control">
+        <custom-textarea [id]="'uri-encode'" [label]="'Decodificar'" [placeholder]="'Ingresa el texto a decodificar'"
+            [(ngModel)]="encodeText" (ngModelChange)="decode()" />
+    </div>
+</section>
