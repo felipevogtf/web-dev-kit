@@ -1,0 +1,37 @@
+.label-container {
+  display: block;
+  margin: 10px 0px;
+}
+
+.input-container {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  &__button {
+    position: absolute;
+    right: 0;
+    margin: 5px;
+  }
+
+  &__area {
+    padding: 10px;
+    padding-right: 55px;
+  }
+}
+
+.icon-button {
+  &__icon-custom {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+
+    transition: opacity 80ms ease-in;
+  }
+
+  &__icon--visible {
+    opacity: 1;
+    transition: opacity 80ms ease-out 100ms;
+  }
+}
