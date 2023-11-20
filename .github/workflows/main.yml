@@ -28,4 +28,4 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@3.7.1
         with:
           branch: gh-pages  # Cambia esto si estás usando una rama diferente para GitHub Pages
-          folder: dist/nombre-app  # Reemplaza 'nombre-app' con el nombre de tu carpeta de distribución después del build
+          folder: dist/web-dev-kit/browser  # Reemplaza 'nombre-app' con el nombre de tu carpeta de distribución después del build
