@@ -1,17 +1,13 @@
 <section>
-    <h2>Codificar / Decodificar texto en base64</h2>
+    <h2>Codificar / Decodificar texto en BASE64</h2>
 
     <div class="form-control">
         <custom-textarea [id]="'base64decode'" [label]="'Codificar'" [placeholder]="'Ingresa el texto a codificar'"
-            [(ngModel)]="decodeText" />
-
-        <button type="button" class="button button--primary" (click)="encode()">Codificar</button>
+            [(ngModel)]="decodeText" (ngModelChange)="encode()" />
     </div>
 
     <div class="form-control">
         <custom-textarea [id]="'base64encode'" [label]="'Decodificar'" [placeholder]="'Ingresa el texto a decodificar'"
-            [(ngModel)]="encodeText" />
-
-        <button type="button" class="button button--primary" (click)="decode()">Decodificar</button>
+            [(ngModel)]="encodeText" (ngModelChange)="decode()" />
     </div>
 </section>

@@ -9,12 +9,18 @@ export class Base64Component {
   encodeText: string = '';
   decodeText: string = '';
 
+  constructor() {}
+
   encode() {
     this.encodeText = this.encodeToBase64(this.decodeText);
   }
 
-  decode(){
-    this.decodeText = this.decodeFromBase64(this.encodeText);
+  decode() {
+    try {
+      this.decodeText = this.decodeFromBase64(this.encodeText);
+    } catch (e) {
+      console.log('No se pudo decodificar');
+    }
   }
 
   encodeToBase64(text: string): string {
@@ -24,5 +30,4 @@ export class Base64Component {
   decodeFromBase64(text: string): string {
     return atob(text);
   }
-  
 }
