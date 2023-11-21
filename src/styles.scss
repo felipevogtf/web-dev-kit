@@ -9,6 +9,7 @@
 // Import components
 @use "assets/styles/components/index";
 
+
 @font-face {
   font-family: "Mona-Sans";
   src: url("assets/fonts/Mona-Sans.woff2");
@@ -19,6 +20,6 @@ body {
   background: var(--background-color);
 }
 
-.resize-animation-stopper *{
+.resize-animation-stopper * {
   transition: none !important; /* O cualquier ajuste necesario */
 }
