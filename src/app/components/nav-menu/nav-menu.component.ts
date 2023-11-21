@@ -65,10 +65,15 @@ export class NavMenuComponent {
     {
       id: 3,
       icon: faCode,
-      title: 'test',
+      title: 'Code',
       toggle: false,
-      childs: null,
-      link: '/',
+      childs: [
+        {
+          icon: faCode,
+          title: 'Javascript',
+          link: '/code/javascript',
+        },
+      ],
     },
   ];
 

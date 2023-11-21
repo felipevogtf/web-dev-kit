@@ -1,0 +1,19 @@
+<section class="javascript">
+  <div class="javascript__editor">
+    <ngx-monaco-editor
+      class="monaco-editor"
+      [options]="editorOptions"
+      [(ngModel)]="code"
+      (ngModelChange)="executeCode()"
+    ></ngx-monaco-editor>
+  </div>
+
+  <div class="form-control">
+    <custom-textarea
+      [id]="'console'"
+      [label]="'Consola'"
+      [placeholder]="''"
+      [(ngModel)]="output"
+    />
+  </div>
+</section>

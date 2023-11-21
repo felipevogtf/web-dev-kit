@@ -1,0 +1,17 @@
+.javascript {
+  display: flex;
+  flex-direction: column;
+
+  &__editor {
+    width: 100%;
+    border-radius: var(--base-radius);
+    overflow: hidden;
+    margin-top: 20px;
+  }
+}
+
+.monaco-editor {
+  min-height: 100%;
+  padding: 0;
+  margin: 0;
+}
