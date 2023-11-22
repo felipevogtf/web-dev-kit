@@ -2,12 +2,12 @@
   --background-color: #fff;
 
   // Base color
-  --base-color: #E9ECEF;
+  --base-color: #e9ecef;
   --base-color-light: #f3f3f3;
   --base-color-dark: rgb(219, 0, 0);
 
   // Primary color
-  --primary-color: #343A40;
+  --primary-color: #343a40;
   --primary-color-contrast: #fff;
   --primary-color-light: #566069;
   --primary-color-dark: rgb(219, 0, 0);
@@ -26,4 +26,22 @@
 
   // Radius
   --base-radius: 5px;
+
+  --color-success: #08c552;
+  --color-success-contrast: #ffffff;
+
+  --color-warning: #fdbc2c;
+  --color-warning-contrast: #3a3a3a;
+
+  --color-danger: #ff3a41;
+  --color-danger-contrast: #ffffff;
+
+  --color-dark: #222428;
+  --color-dark-contrast: #ffffff;
+
+  --color-medium: #c7c7c7;
+  --color-medium-contrast: #5e5e5e;
+
+  --color-light: #f4f5f8;
+  --color-light-contrast: #000000;
 }

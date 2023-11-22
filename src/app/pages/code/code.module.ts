@@ -5,6 +5,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
 import { TextareaComponent } from '../../components/textarea/textarea.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { HtmlViewerComponent } from '../../components/html-viewer/html-viewer.component';
 const routes: Routes = [
   {
     path: '',
@@ -23,8 +25,10 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes),
     FormsModule,
-    MonacoEditorModule.forRoot(),
+    MonacoEditorModule,
     TextareaComponent,
+    FontAwesomeModule,
+    HtmlViewerComponent
   ],
 })
 export class CodeModule {}
