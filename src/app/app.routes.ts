@@ -18,6 +18,11 @@ export const routes: Routes = [
       import('./pages/hashing/hashing.module').then((m) => m.HashingModule),
   },
   {
+    path: 'code',
+    loadChildren: () =>
+      import('./pages/code/code.module').then((m) => m.CodeModule),
+  },
+  {
     path: '**',
     component: NotFoundComponent,
   },

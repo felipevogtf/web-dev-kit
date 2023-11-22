@@ -1,0 +1,58 @@
+<section class="javascript">
+
+  <h2>Javascript Compiler</h2>
+
+  <!--Start. javascript-editor-->
+  <div class="javascript-editor">
+
+    <!--Start. javascript-editor__header-->
+    <div class="javascript-editor__header">
+      <label>Entrada</label>
+      <button class="icon-button" (click)="play()">
+        <span
+          class="icon-button__icon"
+          [class.icon-button__icon--visible]="!running"
+          ><i class="fa-solid fa-play"></i
+        ></span>
+        <span
+          class="icon-button__icon"
+          [class.icon-button__icon--visible]="running"
+          ><i class="fa-solid fa-circle-notch fa-spin"></i
+        ></span>
+      </button>
+    </div>
+    <!--End. javascript-editor__header-->
+
+    <!--Start. javascript-editor__content-->
+    <div class="javascript-editor__content">
+      @if (loading) {
+      <span class="loader"
+        ><i class="fa-solid fa-code fa-bounce"></i
+      ></span>
+      }
+      <ngx-monaco-editor
+        class="monaco-editor"
+        [options]="editorOptions"
+        [(ngModel)]="code"
+        (ngModelChange)="executeCode()"
+        (onInit)="onMonacoEditorInit($event)"
+      ></ngx-monaco-editor>
+    </div>
+    <!--Start. javascript-editor__content-->
+  </div>
+  <!--End. javascript-editor-->
+
+  <!--Start. javascript--console-->
+  <div class="javascript--console">
+    <label>Salida</label>
+    <html-viewer [html]="outputHTML" [height]="'400px'"></html-viewer>
+  </div>
+  <!--End. javascript--console-->
+</section>
+
+<!--Seccion-->
+
+<!--editor-->
+<!--editor-header-->
+<!--editor-content-->
+<!--editor-header-->
