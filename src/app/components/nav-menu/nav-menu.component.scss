@@ -1,4 +1,6 @@
 .nav {
+  user-select: none;
+
   &__menu {
     padding: 0;
     margin: 0;
@@ -59,12 +61,25 @@
     flex-direction: row;
     column-gap: 15px;
 
+    transition: transform 100ms ease-in, background-color 100ms ease-in,
+      border 100ms ease-in;
+
     fa-icon {
       font-size: 0.8em;
     }
+
     &:hover {
       cursor: pointer;
       background-color: var(--bg-secondary-light);
+    }
+
+    &--active {
+      background: var(--primary-color);
+      color: var(--primary-color-contrast);
+    }
+
+    &--active:hover {
+      background: var(--primary-color-light);
     }
   }
 }
