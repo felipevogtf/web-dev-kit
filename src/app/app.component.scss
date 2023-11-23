@@ -11,8 +11,8 @@
     height: 100vh;
     overflow: hidden;
 
-    border-right: 1px solid var(--border-color);
-    background-color: var(--background-color);
+    border-right: 1px solid var(--border-primary);
+    background-color: var(--bg-secondary);
   }
 
   &__content {
@@ -37,7 +37,7 @@
       position: sticky;
       height: auto;
       border-right: none;
-      border-bottom: 1px solid var(--border-color);
+      border-bottom: 1px solid var(--border-primary);
       z-index: 1;
     }
   }

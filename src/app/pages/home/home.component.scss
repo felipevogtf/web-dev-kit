@@ -43,3 +43,76 @@ div {
 .dropdown-toggle:checked ~ .dropdown-content {
   display: block;
 }
+
+.tools-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(200px, 100%), 1fr));
+  gap: 10px;
+}
+
+.tool-card {
+  user-select: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  background-color: var(--bg-secondary);
+  border-radius: var(--base-radius);
+  border: 1px solid var(--border-primary);
+  padding: 20px;
+
+  color: var(--text-primary);
+
+  text-align: center;
+  text-wrap: pretty;
+
+  transition: transform 100ms ease-in, background-color 100ms ease-in,
+    border 100ms ease-in;
+
+  &__icon {
+    font-size: 40px;
+  }
+  &__title {
+    margin: 0;
+  }
+  &__description {
+    margin: 5px;
+    font-size: 0.9em;
+    color: var(--text-primary-light);
+  }
+
+  &:hover {
+    cursor: pointer;
+    border-color: var(--border-primary-focus);
+    background-color: var(--bg-secondary-light);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+.input-container {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  &__icon {
+    color: var(--text-primary);
+    position: absolute;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin: 5px;
+    height: 50px;
+    width: 50px;
+  }
+
+  &__input {
+    padding: 10px;
+    padding-right: 55px;
+  }
+}
