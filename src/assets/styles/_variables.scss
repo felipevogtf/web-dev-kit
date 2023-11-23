@@ -1,5 +1,18 @@
 :root {
-  --background-color: #fff;
+  /*Redifiniendo variables*/
+  --bg-primary: #fafafa;
+
+  --bg-secondary: #fff;
+  --bg-secondary-light: #f5f8f9;
+  --bg-secondary-dark: #eaeaea;
+
+  // Border color
+  --border-primary: #e8ebed;
+  --border-primary-focus: gray;
+
+  --text-primary: #333;
+  --text-primary-light: #777;
+  /*Redifiniendo variables*/
 
   // Base color
   --base-color: #e9ecef;
@@ -16,10 +29,6 @@
   --secondary-color: blue;
   --secondary-color-light: rgb(253, 139, 139);
   --secondary-color-dark: rgb(219, 0, 0);
-
-  // Border color
-  --border-color: lightgray;
-  --border-color-focus: gray;
 
   // Hover
   --base-hover-color: #fafafa;

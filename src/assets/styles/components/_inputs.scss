@@ -9,18 +9,18 @@ Text Area
   resize: none;
   padding: var(--base-radius);
   box-sizing: border-box;
-  border: solid 1px var(--border-color);
+  border: solid 1px var(--border-primary);
 
   transition-property: background-color, border;
   transition-duration: 100ms;
   transition-timing-function: ease-in;
 
   &:focus-visible {
-    border: solid 1px var(--border-color-focus);
+    border: solid 1px var(--border-primary-focus);
   }
 
   &:hover {
-    background-color: var(--base-hover-color);
+    background-color: var(--bg-secondary-light);
   }
 }
 
@@ -36,21 +36,23 @@ Text Area
   resize: none;
   padding: 5px;
   box-sizing: border-box;
-  border: solid 1px var(--border-color);
+  border: solid 1px var(--border-primary);
 
   transition-property: background-color, border;
   transition-duration: 100ms;
   transition-timing-function: ease-in;
 
+  color: var(--text-primary);
+
   &:focus-visible {
-    border: solid 1px var(--border-color-focus);
+    border: solid 1px var(--border-primary-focus);
   }
 
   &:hover {
-    background-color: var(--base-hover-color);
+    background-color: var(--bg-secondary-light);
   }
 
   &:read-only {
-    background-color: var(--base-hover-color);
+    background-color: var(--bg-secondary-dark);
   }
 }
