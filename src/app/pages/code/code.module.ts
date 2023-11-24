@@ -7,6 +7,7 @@ import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
 import { TextareaComponent } from '../../components/textarea/textarea.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HtmlViewerComponent } from '../../components/html-viewer/html-viewer.component';
+import { AngularSplitModule } from 'angular-split';
 const routes: Routes = [
   {
     path: '',
@@ -28,7 +29,8 @@ const routes: Routes = [
     MonacoEditorModule,
     TextareaComponent,
     FontAwesomeModule,
-    HtmlViewerComponent
+    HtmlViewerComponent,
+    AngularSplitModule
   ],
 })
 export class CodeModule {}
