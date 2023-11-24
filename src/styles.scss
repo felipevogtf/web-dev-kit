@@ -3,6 +3,9 @@
    v2.0 | 20110126
    License: none (public domain)
 */
+
+// importing core styling file
+@use "./assets/fontawesome/css/all.css";
 @use "assets/styles/variables";
 @use "assets/styles/normalize";
 

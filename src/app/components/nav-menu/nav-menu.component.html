@@ -1,41 +1,68 @@
 <aside class="nav">
+  <!-- start. nav header -->
   <div class="nav__header">
     <button class="nav__toggle icon-button" (click)="toggle()">
       <i class="fa-solid fa-bars"></i>
     </button>
-    <span> WebDevKit</span>
+    <span> Web Dev Kit</span>
   </div>
+  <!-- end. nav header-->
 
+  <!-- start. nav overlay (only mobile)-->
   <div
     class="nav__overlay"
     [class.nav__overlay--visible]="isToggle"
     (click)="toggle()"
   ></div>
+  <!-- end. nav overlat -->
 
+  <!-- start. nav menus -->
   <ul class="nav__menu" [class.nav__menu--visible]="isToggle">
     @for (menu of menus; track menu.id) {
     <li class="nav__item">
-      <div class="nav__item nav__link" (click)="test(menu)">
+      @if (menu.childs) {
+      <!-- menu sin hijos-->
+      <div class="nav__item nav__link" (click)="toggleLink(menu)">
         <i [ngClass]="menu.icon"></i>
         <span>{{ menu.title }}</span>
-        @if (menu.childs) {
         <i
           class="nav__dropdown fa-solid fa-angle-down"
           [class.nav__dropdown--rotate]="menu.toggle"
         ></i>
-        }
       </div>
+      <!---->
+      } @else{
+      <!-- menu con hijos -->
+      <div
+        class="nav__item nav__link"
+        routerLinkActive="nav__link--active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        [routerLink]="menu.link"
+      >
+        <i [ngClass]="menu.icon"></i>
+        <span>{{ menu.title }}</span>
+      </div>
+      <!---->
+      }
 
+      <!-- hijos -->
       @if (menu.childs && menu.toggle) {
-      <ul class="nav__submenu">
+      <ul class="nav__submenu" @myInsertRemoveTrigger>
         @for (child of menu.childs; track $index) {
-        <li class="nav__item nav__link" (click)="test(child)">
+        <li
+          class="nav__item nav__link"
+          routerLinkActive="nav__link--active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          [routerLink]="child.link"
+        >
           <i [ngClass]="child.icon"></i>{{ child.title }}
         </li>
         }
       </ul>
       }
+      <!---->
     </li>
     }
   </ul>
+  <!-- end. nav menus -->
 </aside>

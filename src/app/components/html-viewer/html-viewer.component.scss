@@ -1,6 +1,5 @@
 .html-viewer {
   padding: 15px;
-  border: solid 1px var(--border-primary);
-  border-radius: var(--base-radius);
-  overflow: auto;
+  background-color: var(--bg-secondary);
+  min-height: 100%;
 }

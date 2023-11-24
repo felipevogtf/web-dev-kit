@@ -1,25 +1,44 @@
-<div class="input-container">
-  <input
-    id="search"
-    class="input-container__input input"
-    [(ngModel)]="search"
-    (ngModelChange)="filter()"
-  />
-  <span class="input-container__icon">
-    <i class="fa-solid fa-magnifying-glass"></i>
-  </span>
-</div>
-<section class="tools-container" [@filterAnimation]="filterItems.length">
-  @for (tool of filterItems; track $index) {
-  <article
-    class="tool-card"
-    (click)="navigate(tool.link)"
-  >
-    <div class="tool-card__icon">
-      <i [ngClass]="tool.faIcon"></i>
-    </div>
-    <h3 class="tool-card__title">{{ tool.title }}</h3>
-    <p class="tool-card__description">{{ tool.description }}</p>
+<!--start. header-->
+<header class="home-header">
+  <h1 class="home-header__title">Web Dev Kits</h1>
+  <p class="home-header__description">
+    Web Dev Kits es tu aliado principal en el desarrollo web. Ponemos a tu
+    disposición una amplia gama de herramientas esenciales, desde generadores de
+    hashes hasta codificadores/decodificadores y más. Simplifica tu proceso de
+    codificación de datos y mejora tu eficiencia en el desarrollo web con
+    nuestras herramientas versátiles y precisas.
+  </p>
+</header>
+<!--end. header-->
+
+<!--start. content-->
+<section class="home-content">
+  <h2 class="home-content__title">Todas las herramientas</h2>
+
+  <div class="home-content__input input-container">
+    <input
+      id="search"
+      class="input-container__input input"
+      [(ngModel)]="search"
+      (ngModelChange)="filter()"
+    />
+    <span class="input-container__icon">
+      <i class="fa-solid fa-magnifying-glass"></i>
+    </span>
+  </div>
+
+  <article class="home-content__tools" [@filterAnimation]="filterItems.length">
+    @for (tool of filterItems; track $index) {
+    <article class="tool-card" (click)="navigate(tool.link)">
+      <div class="tool-card__icon">
+        <i [ngClass]="tool.faIcon"></i>
+      </div>
+      <div>
+        <h3 class="tool-card__title">{{ tool.title }}</h3>
+        <p class="tool-card__description">{{ tool.description }}</p>
+      </div>
+    </article>
+    }
   </article>
-  }
 </section>
+<!--end. content-->

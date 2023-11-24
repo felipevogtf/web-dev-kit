@@ -15,12 +15,14 @@ export class JavascriptComponent {
     lineHeight: '21px',
     fontFamily: 'Cascadia Code, system-ui',
     fontLigatures: true,
+    minimap: { enabled: false },
   };
   code: string = '';
   output: string = '';
-  outputHTML: SafeHtml = '';
+  outputHTML: SafeHtml = this.sanitizerHTML(this.consoleHeaderHTML());
   loading: boolean = true;
   running: boolean = false;
+  animationRunning: boolean = false;
   private codeEvent: Subject<string> = new Subject<string>();
 
   constructor(
@@ -60,21 +62,23 @@ export class JavascriptComponent {
   clear() {
     this.running = true;
     this.output = '';
-    this.outputHTML = '';
+    this.outputHTML = this.sanitizerHTML(this.consoleHeaderHTML());
   }
 
   async play() {
     if (this.running) {
       return;
     }
-    
+
     this.clear();
 
     setTimeout(() => {
       const result = this.execute(this.code);
       this.output += result;
 
-      this.outputHTML = this.sanitizerHTML(this.output);
+      this.outputHTML = this.sanitizerHTML(
+        this.consoleHeaderHTML() + this.output
+      );
       this.running = false;
     }, 300);
   }
@@ -86,13 +90,30 @@ export class JavascriptComponent {
       const result = executionFunction();
 
       if (result) {
-        data = `<p>${result}</p>` + '\n';
+        data = `<p style="padding: 0px 20px;">${result}</p>` + '\n';
       }
     } catch (error: any) {
       data = this.errorToHTML(error) + '\n';
     }
 
     return data;
+  }
+
+  consoleHeaderHTML() {
+    return `
+    <p
+      style="
+        display: flex;
+        flex-direction: row;
+        column-gap: 20px;
+        padding: 0px 20px;
+        color: var(--color-light-contrast);
+      "
+    >
+      <i class="fa-solid fa-chevron-right"></i>
+      <span>Consola</span>
+    </p>
+    `;
   }
 
   logToHTML(value: string) {
@@ -159,5 +180,28 @@ export class JavascriptComponent {
   onMonacoEditorInit(event: any): void {
     this.loading = false;
     this.changeDetectorRef.detectChanges();
+  }
+
+  async copyClipboard() {
+    if (!this.code || this.animationRunning) {
+      return;
+    }
+
+    try {
+      await navigator.clipboard.writeText(this.code);
+      this.changeIcon();
+    } catch (err) {
+      console.error('Failed to copy: ', err);
+    }
+  }
+
+  async changeIcon() {
+    this.animationRunning = true;
+    await this.delay(1000);
+    this.animationRunning = false;
+  }
+
+  delay(ms: number): Promise<void> {
+    return new Promise((resolve) => setTimeout(resolve, ms));
   }
 }

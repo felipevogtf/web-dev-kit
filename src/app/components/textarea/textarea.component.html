@@ -1,11 +1,24 @@
 <label [for]="id" class="label-container">{{ label }}</label>
 <div class="textarea-container">
-    <textarea [id]="id" class="textarea-container__area textarea" rows="10" [placeholder]="placeholder"
-        [(ngModel)]="value" (ngModelChange)="onInputChange($event)"></textarea>
-    <button class="textarea-container__button icon-button" (click)="copyClipboard()">
-        <fa-icon [icon]="iconClip" class="icon-button__icon-custom"
-            [class.icon-button__icon--visible]="!animationRunning"></fa-icon>
-        <fa-icon [icon]="iconCheck" class="icon-button__icon-custom"
-            [class.icon-button__icon--visible]="animationRunning"></fa-icon>
-    </button>
+  <textarea
+    [id]="id"
+    class="textarea-container__area textarea"
+    rows="10"
+    [placeholder]="placeholder"
+    [(ngModel)]="value"
+    (ngModelChange)="onInputChange($event)"
+  ></textarea>
+  <button
+    class="textarea-container__button icon-button"
+    (click)="copyClipboard()"
+  >
+    <i
+      class="icon-button__icon-custom fa-regular fa-clipboard"
+      [class.icon-button__icon--visible]="!animationRunning"
+    ></i>
+    <i
+      class="icon-button__icon-custom fa-solid fa-check"
+      [class.icon-button__icon--visible]="animationRunning"
+    ></i>
+  </button>
 </div>

@@ -1,53 +1,48 @@
-div {
-  margin-top: 20px;
-  margin-bottom: 20px;
+.home-header {
+  &__description {
+    color: var(--text-primary-light);
+    text-wrap: pretty;
+    line-height: 1.5;
+  }
 }
 
-/* Estilos básicos */
-.sidebar {
-  height: 100%;
-  width: 250px;
-  position: fixed;
-  top: 0;
-  left: 0;
-  background-color: #333;
-  padding-top: 20px;
-}
+.home-content {
+  margin-top: 50px;
 
-.sidebar ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
+  &__input {
+    margin: 20px 0px;
+  }
 
-.sidebar ul li {
-  border-bottom: 1px solid #555;
-}
+  .input-container {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 
-.sidebar ul li a {
-  display: block;
-  color: white;
-  text-decoration: none;
-  padding: 8px 16px;
-}
+    &__icon {
+      color: var(--text-primary);
+      position: absolute;
+      right: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
-.sidebar ul li a:hover {
-  background-color: #555;
-}
+      margin: 5px;
+      height: 50px;
+      width: 50px;
+    }
 
-/* Estilos para elementos desplegables */
-.dropdown-content {
-  display: none;
-}
+    &__input {
+      padding: 10px;
+      padding-right: 55px;
+    }
+  }
 
-.dropdown-toggle:checked ~ .dropdown-content {
-  display: block;
-}
-
-.tools-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(200px, 100%), 1fr));
-  gap: 10px;
+  &__tools {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(200px, 100%), 1fr));
+    gap: 10px;
+  }
 }
 
 .tool-card {
@@ -55,6 +50,7 @@ div {
   display: flex;
   flex-direction: column;
   align-items: center;
+  row-gap: 20px;
 
   background-color: var(--bg-secondary);
   border-radius: var(--base-radius);
@@ -72,12 +68,15 @@ div {
   &__icon {
     font-size: 40px;
   }
+
   &__title {
     margin: 0;
   }
+  
   &__description {
     margin: 5px;
     font-size: 0.9em;
+    line-height: 1.2;
     color: var(--text-primary-light);
   }
 
@@ -89,30 +88,5 @@ div {
 
   &:active {
     transform: scale(0.95);
-  }
-}
-
-.input-container {
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-
-  &__icon {
-    color: var(--text-primary);
-    position: absolute;
-    right: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    margin: 5px;
-    height: 50px;
-    width: 50px;
-  }
-
-  &__input {
-    padding: 10px;
-    padding-right: 55px;
   }
 }

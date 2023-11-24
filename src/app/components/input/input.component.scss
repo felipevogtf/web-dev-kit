@@ -35,3 +35,7 @@
     transition: opacity 80ms ease-out 100ms;
   }
 }
+
+.input-container__area[readonly] + .input-container__button:hover {
+  background-color: lightgray;
+}

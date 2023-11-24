@@ -9,22 +9,35 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    padding: 5px;
+    padding-bottom: 3px;
+
+    .icon-button {
+      &__icon {
+        position: absolute;
+        transform: translate(-50%, -50%);
+        opacity: 0;
+
+        transition: opacity 80ms ease-in;
+      }
+
+      &__icon--visible {
+        opacity: 1;
+        transition: opacity 80ms ease-out 100ms;
+      }
+    }
   }
 
   &__content {
     position: relative;
-    height: 600px;
-    background: var(--color-light);
-    border-radius: var(--base-radius);
+    min-height: max(100%, 300px);
+    background-color: var(--bg-secondary-dark);
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
 
     .monaco-editor {
       position: absolute;
-      border-radius: var(--base-radius);
-      overflow: hidden;
       padding: 10px 0px;
       min-height: 100%;
       width: 100%;
@@ -38,6 +51,27 @@
       font-size: 50px;
       color: var(--color-light-contrast);
     }
+
+    .icon-button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      margin: 5px;
+
+      &__icon-custom {
+        position: absolute;
+        transform: translate(-50%, -50%);
+        opacity: 0;
+    
+        transition: opacity 80ms ease-in;
+      }
+    
+      &__icon--visible {
+        opacity: 1;
+        transition: opacity 80ms ease-out 100ms;
+      }
+    }
+    
   }
 
   label {
@@ -48,6 +82,7 @@
 
 .javascript--console {
   margin-top: 30px;
+  min-height: max(100%, 100px);
 
   label {
     display: block;
@@ -55,17 +90,28 @@
   }
 }
 
-.icon-button {
-  &__icon {
-    position: absolute;
-    transform: translate(-50%, -50%);
-    opacity: 0;
+.grid-editor {
+  height: 100%;
+  max-height: 700px;
+  border: 1px solid var(--border-primary);
+  border-radius: var(--base-radius);
+  overflow: hidden;
+}
 
-    transition: opacity 80ms ease-in;
+@media (height > 1000px) {
+  .grid-editor {
+    max-height: 800px;
   }
+}
 
-  &__icon--visible {
-    opacity: 1;
-    transition: opacity 80ms ease-out 100ms;
+@media (height > 1200px) {
+  .grid-editor {
+    max-height: 1000px;
+  }
+}
+
+@media (height > 1500px) {
+  .grid-editor {
+    max-height: 1200px;
   }
 }

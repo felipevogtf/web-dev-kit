@@ -47,7 +47,7 @@
 
 /* Icon button */
 .icon-button {
-  background: transparent;
+  background-color: transparent;
   border: none;
   border-radius: 50%;
 
@@ -56,15 +56,27 @@
 
   color: var(--text-primary);
 
-  transition: transform 100ms ease-in, background 100ms ease-in,
+  transition: transform 100ms ease-in, background-color 100ms ease-in,
     border 100ms ease-in;
 
   &:hover {
     cursor: pointer;
-    background: var(--bg-secondary-light);
+    background-color: var(--bg-secondary-light);
   }
 
   &:active {
     transform: scale(0.95);
+  }
+
+  &--darkhover:hover {
+    background-color: lightgray;
+  }
+
+  &--light {
+    color: var(--color-light);
+  }
+
+  &--light:hover {
+    background-color: var(--color-light-contrast);
   }
 }
