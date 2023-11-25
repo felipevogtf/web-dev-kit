@@ -1,0 +1,28 @@
+<section class="base64">
+  <as-split direction="horizontal">
+    <as-split-area [size]="50" [minSize]="10">
+      <h1>hola</h1>
+    </as-split-area>
+    <as-split-area [size]="50" [minSize]="20">
+      <div class="base64__preview">
+        <div
+          class="drop-container"
+          (dragover)="onDragOver($event)"
+          (dragenter)="onDragEnter($event)"
+          (dragleave)="onDragLeave($event)"
+          (drop)="onDrop($event)"
+          [ngClass]="{ 'drop-container--isDrag': isDragging }"
+        >
+          <span class="drop-container__text">Arrastra la imagen aquí</span>
+        </div>
+
+        <div class="img-preview">
+          <img
+            src="https://media1.popsugar-assets.com/files/thumbor/sRLzol0zuPYrWs7v7aBIZa8eOyk=/0x600:2401x3001/2401x3600/filters:format_auto():quality(85):extract_cover()/2022/01/04/686/n/1922507/6023a31161d467cac500f9.25034761_.jpg"
+            alt="Imagen"
+          />
+        </div>
+      </div>
+    </as-split-area>
+  </as-split>
+</section>
