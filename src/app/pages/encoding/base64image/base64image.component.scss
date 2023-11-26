@@ -1,6 +1,14 @@
 .base64 {
-  height: 800px;
+  height: 700px;
   position: relative;
+
+  &__textarea {
+    background: red;
+    height: 100%;
+    padding: 5px;
+    box-sizing: border-box;
+   
+  }
 }
 
 .drop-container {
@@ -23,13 +31,14 @@
   }
 
   span {
-    padding: 50px;
+    text-align: center;
   }
 }
 
 .base64__preview {
   display: flex;
   flex-direction: column;
+  height: 100%;
   /* Ajusta otros estilos según sea necesario */
 }
 
@@ -39,12 +48,11 @@
   justify-content: center;
   align-items: center;
   overflow: hidden;
-  background-color: #f0f0f0; /* Color de fondo opcional */
+  margin: 5px;
 }
 
 .img-preview img {
   width: auto;
-  height: 100%;
   max-width: 100%;
-  display: block;
+  max-height: 100%;
 }

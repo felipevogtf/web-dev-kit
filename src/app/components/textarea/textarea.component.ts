@@ -29,7 +29,7 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons';
 export class TextareaComponent implements ControlValueAccessor {
   @Input() id!: string;
   @Input() placeholder: string = '';
-  @Input() label!: string;
+  @Input() label: string = '';
 
   value: string = '';
   iconClip: IconDefinition = faClipboard;
