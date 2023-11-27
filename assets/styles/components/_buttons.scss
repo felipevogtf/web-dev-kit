@@ -1,20 +1,25 @@
 /* Solid button */
 .button {
-  background: var(--base-color);
+  background-color: var(--base-color);
+  color: var(--text-primary);
   border: none;
   border-radius: var(--base-radius);
-  width: 200px;
+  min-width: 200px;
   height: 50px;
-
-  min-width: 50px;
   max-width: 100%;
+  display: flex;
+  flex-direction: row;
+  column-gap: 10px;
+  padding: 0px 20px;
+  justify-content: center;
+  align-items: center;
 
-  transition: transform 100ms ease-in, background 100ms ease-in,
+  transition: transform 100ms ease-in, background-color 100ms ease-in,
     border 100ms ease-in;
 
   &:hover {
     cursor: pointer;
-    background: var(--base-color-light);
+    background-color: var(--base-color-light);
   }
 
   &:active {
@@ -28,22 +33,22 @@
 
 /* Modifier: button--color-primary */
 .button--primary {
-  background: var(--primary-color);
+  background-color: var(--primary-color);
   color: var(--primary-color-contrast);
 
   &:hover {
-    background: var(--primary-color-light);
+    background-color: var(--primary-color-light);
   }
 }
 
 /* Modifier: button--color-secondary */
-.button--secondary {
-  background: var(--secondary-color);
+// .button--secondary {
+//   background: var(--secondary-color);
 
-  &:hover {
-    background: var(--secondary-color-light);
-  }
-}
+//   &:hover {
+//     background: var(--secondary-color-light);
+//   }
+// }
 
 /* Icon button */
 .icon-button {
@@ -78,5 +83,11 @@
 
   &--light:hover {
     background-color: var(--color-light-contrast);
+  }
+
+  &--small {
+    font-size: 0.9em;
+    height: 40px;
+    width: 40px;
   }
 }
