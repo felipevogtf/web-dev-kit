@@ -79,4 +79,10 @@
   &--light:hover {
     background-color: var(--color-light-contrast);
   }
+
+  &--small {
+    font-size: 0.9em;
+    height: 40px;
+    width: 40px;
+  }
 }

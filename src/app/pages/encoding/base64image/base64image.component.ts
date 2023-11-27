@@ -51,6 +51,13 @@ export class Base64imageComponent {
     }
   }
 
+  onFileSelected(event: any) {
+    const selectedFile = event.target.files[0];
+    if (selectedFile) {
+      this.handleImageUpload(selectedFile);
+    }
+  }
+
   handleImageUpload(file: File) {
     const reader = new FileReader();
     reader.onload = (event: ProgressEvent<FileReader>) => {

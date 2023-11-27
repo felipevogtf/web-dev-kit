@@ -5,9 +5,10 @@ Text Area
   outline: none;
   font-family: inherit;
   width: 100%;
-  border-radius: 5px;
+  border-bottom-left-radius: var(--base-radius);
+  border-bottom-right-radius: var(--base-radius);
   resize: none;
-  padding: var(--base-radius);
+  padding: 5px;
   box-sizing: border-box;
   border: solid 1px var(--border-primary);
 
