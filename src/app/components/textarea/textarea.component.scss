@@ -14,9 +14,10 @@
   &__buttons {
     width: 100%;
     height: min-content;
-    background-color: var(--bg-secondary-dark);
+    background-color: white;
     text-align: end;
     border: 1px solid var(--border-primary);
+    border-bottom: none;
     border-top-left-radius: var(--base-radius);
     border-top-right-radius: var(--base-radius);
     box-sizing: border-box;
