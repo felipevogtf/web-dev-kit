@@ -1,0 +1,45 @@
+<section>
+  <h2>Codificar / Decodificar imagen en Base64</h2>
+
+  <section class="base64">
+    <as-split direction="horizontal">
+      <as-split-area [size]="50" [minSize]="10">
+        <div class="base64__textarea">
+          <custom-textarea [(ngModel)]="imageSrc"></custom-textarea>
+        </div>
+      </as-split-area>
+      <as-split-area [size]="50" [minSize]="20">
+        <div class="base64__preview">
+          <div
+            class="drop-container"
+            (dragover)="onDragOver($event)"
+            (dragenter)="onDragEnter($event)"
+            (dragleave)="onDragLeave($event)"
+            (drop)="onDrop($event)"
+            [ngClass]="{ 'drop-container--isDrag': isDragging }"
+          >
+            <span class="drop-container__text">Arrastra la imagen aquí</span>
+  
+            <input
+              type="file"
+              (change)="onFileSelected($event)"
+              style="display: none"
+              #fileInput
+            />
+            <button class="button" (click)="fileInput.click()" type="button">
+              <i class="fa-solid fa-cloud-arrow-up"></i>
+              <span>Seleccionar Archivo</span>
+            </button>
+          </div>
+  
+          <div class="img-preview">
+            @if (imageSrc) {
+            <img [src]="imageSrc" alt="Imagen" />
+            }
+          </div>
+        </div>
+      </as-split-area>
+    </as-split>
+  </section>
+  
+</section>

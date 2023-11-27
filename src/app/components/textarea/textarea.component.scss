@@ -1,21 +1,31 @@
 .label-container {
   display: block;
   margin: 10px 0px;
+
+  &--hidden {
+    display: none;
+  }
 }
 
 .textarea-container {
   position: relative;
+  height: calc(100% - 42px);
 
-  &__button {
-    position: absolute;
-    top: 0;
-    right: 0;
-    margin: 5px;
+  &__buttons {
+    width: 100%;
+    height: min-content;
+    background-color: white;
+    text-align: end;
+    border: 1px solid var(--border-primary);
+    border-bottom: none;
+    border-top-left-radius: var(--base-radius);
+    border-top-right-radius: var(--base-radius);
+    box-sizing: border-box;
   }
 
   &__area {
     padding: 10px;
-    padding-right: 55px;
+    height: 100%;
   }
 }
 

@@ -55,6 +55,11 @@ export class NavMenuComponent {
           link: '/encoding/base64',
         },
         {
+          icon: 'fa-solid fa-arrow-right-arrow-left',
+          title: 'Img to Base 64',
+          link: '/encoding/base64image',
+        },
+        {
           icon: 'fa-solid fa-link',
           title: 'URL',
           link: '/encoding/url',
