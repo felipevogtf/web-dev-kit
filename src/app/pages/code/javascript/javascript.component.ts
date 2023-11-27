@@ -34,17 +34,40 @@ export class JavascriptComponent {
     const originalWarn = console.warn;
 
     console.log = (...args) => {
-      this.output += this.logToHTML(args.join(' ')) + '\n';
+
+      let logHTML = '';
+
+      args.forEach((arg) => {
+        logHTML += this.logToHTML(arg) + '\n';
+      });
+
+      this.output += logHTML;
+
       originalLog.apply(console, args);
     };
 
     console.error = (...args) => {
-      this.output += this.errorToHTML(args.join(' ')) + '\n';
+
+      let logHTML = '';
+
+      args.forEach((arg) => {
+        logHTML += this.errorToHTML(arg) + '\n';
+      });
+
+      this.output += logHTML;
+
       originalError.apply(console, args);
     };
 
     console.warn = (...args) => {
-      this.output += this.warnToHTML(args.join(' ')) + '\n';
+      let logHTML = '';
+
+      args.forEach((arg) => {
+        logHTML += this.warnToHTML(arg) + '\n';
+      });
+
+      this.output += logHTML;
+      
       originalWarn.apply(console, args);
     };
 
@@ -53,7 +76,9 @@ export class JavascriptComponent {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.play();
+  }
 
   executeCode() {
     this.codeEvent.next(this.code);
@@ -90,7 +115,11 @@ export class JavascriptComponent {
       const result = executionFunction();
 
       if (result) {
-        data = `<p style="padding: 0px 20px;">${result}</p>` + '\n';
+        if (typeof result === 'object') {
+          data = `<pre>${JSON.stringify(result, null, 2)}</pre>`;
+        } else {
+          data = `<p style="padding: 0px 20px;">${result}</p>`;
+        }
       }
     } catch (error: any) {
       data = this.errorToHTML(error) + '\n';
@@ -117,9 +146,18 @@ export class JavascriptComponent {
   }
 
   logToHTML(value: string) {
+    let log = '';
+
+    if (typeof value === 'object') {
+      log = `<pre style="margin: 0;">${JSON.stringify(value, null, 2)}</pre>`;
+    } else {
+      log = `<span>${value}</span>`;
+    }
+
     return `
-    <p
+    <div
       style="
+        margin: 10px 0px;
         display: flex;
         flex-direction: row;
         column-gap: 20px;
@@ -130,15 +168,24 @@ export class JavascriptComponent {
       "
     >
       <i class="fa-solid fa-chevron-right"></i>
-      <span>${value}</span>
-    </p>
+      ${log}
+    </div>
     `;
   }
 
   errorToHTML(value: string) {
+    let log = '';
+
+    if (typeof value === 'object') {
+      log = `<pre style="margin: 0;">${JSON.stringify(value, null, 2)}</pre>`;
+    } else {
+      log = `<span>${value}</span>`;
+    }
+
     return `
-    <p
+    <div
       style="
+        margin: 10px 0px;
         display: flex;
         flex-direction: row;
         column-gap: 20px;
@@ -149,15 +196,26 @@ export class JavascriptComponent {
       "
     >
       <i class="fa-solid fa-xmark"></i>
-      <span>${value}</span>
-    </p>
+      ${log}
+    </div>
     `;
   }
 
   warnToHTML(value: string) {
+
+    let log = '';
+
+    if (typeof value === 'object') {
+      log = `<pre style="margin: 0;">${JSON.stringify(value, null, 2)}</pre>`;
+    } else {
+      log = `<span>${value}</span>`;
+    }
+
+
     return `
-    <p
+    <div
       style="
+        margin: 10px 0px;
         display: flex;
         flex-direction: row;
         column-gap: 20px;
@@ -168,8 +226,8 @@ export class JavascriptComponent {
       "
     >
       <i class="fa-solid fa-triangle-exclamation"></i>
-      <span>${value}</span>
-    </p>
+      ${log}
+    </div>
     `;
   }
 
