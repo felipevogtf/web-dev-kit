@@ -8,6 +8,8 @@ import {
 } from '@angular/animations';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { Menu } from '../../models/menu.model';
+import MENU_DATA from '../../data/menus.data';
 
 @Component({
   selector: 'app-home',
@@ -45,65 +47,40 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent {
   search: string = '';
-  filterItems: any = [];
+  filterItems: Menu[] = [];
 
-  tools = [
-    {
-      link: '/encoding/base64',
-      faIcon: 'fa-solid fa-arrow-right-arrow-left',
-      title: 'Base64 Conversion',
-      description: 'Codifica y decodifica texto en Base64',
-    },
-    {
-      link: '/encoding/url',
-      faIcon: 'fa-solid fa-link',
-      title: 'URI Conversion',
-      description: 'Codifica y decodifica texto en URI',
-    },
-    {
-      link: '/hashing/hmac',
-      faIcon: 'fa-solid fa-key',
-      title: 'HMAC Generator',
-      description:
-        'Genera códigos HMAC a partir de texto para seguridad avanzada',
-    },
-    {
-      link: '/hashing',
-      faIcon: 'fa-solid fa-fingerprint',
-      title: 'Hash Generator',
-      description:
-        'Genera hashes desde texto usando MD5, SHA-1, SHA-256 y SHA-512',
-    },
-    {
-      link: '/code/javascript',
-      faIcon: 'fa-brands fa-square-js',
-      title: 'JS Compiler',
-      description: 'Compila código JavaScript de manera rápida y sencilla',
-    },
-  ];
+  submenus: Menu[] = [];
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) {
+    this.submenus = MENU_DATA.reduce((acc: Menu[], menu) => {
+      if (menu.childs) {
+        acc.push(...menu.childs);
+      }
+      return acc;
+    }, []);
+
+    console.log(this.submenus);
+  }
 
   ngOnInit() {
     setTimeout(() => {
-      this.filterItems = this.tools;
+      this.filterItems = this.submenus;
     }, 100);
   }
 
   filter() {
-    const results = this.tools.filter(
+    const results = this.submenus.filter(
       (item) =>
         item.title
           .toLocaleLowerCase()
           .includes(this.search.toLocaleLowerCase()) ||
-        item.description.toLowerCase().includes(this.search.toLowerCase())
+        item.description?.toLowerCase().includes(this.search.toLowerCase())
     );
-
     this.filterItems = results;
     const newTotal = this.filterItems.length;
   }
 
-  navigate(route: string) {
+  navigate(route?: string) {
     this.router.navigate([route]);
   }
 }

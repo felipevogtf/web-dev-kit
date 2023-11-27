@@ -31,7 +31,7 @@
     @for (tool of filterItems; track $index) {
     <article class="tool-card" (click)="navigate(tool.link)">
       <div class="tool-card__icon">
-        <i [ngClass]="tool.faIcon"></i>
+        <i [ngClass]="tool.icon"></i>
       </div>
       <div>
         <h3 class="tool-card__title">{{ tool.title }}</h3>
