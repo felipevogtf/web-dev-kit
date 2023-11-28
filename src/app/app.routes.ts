@@ -1,26 +1,16 @@
 import { Routes } from '@angular/router';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { MarkdownComponent } from './pages/code/markdown/markdown.component';
 
 export const routes: Routes = [
   {
     path: '',
     loadChildren: () =>
-      import('./pages/home/home.module').then((m) => m.HomeModule),
+      import('./modules/modules.module').then((m) => m.ModulesModule),
   },
   {
-    path: 'encoding',
-    loadChildren: () =>
-      import('./pages/encoding/encoding.module').then((m) => m.EncodingModule),
-  },
-  {
-    path: 'hashing',
-    loadChildren: () =>
-      import('./pages/hashing/hashing.module').then((m) => m.HashingModule),
-  },
-  {
-    path: 'code',
-    loadChildren: () =>
-      import('./pages/code/code.module').then((m) => m.CodeModule),
+    path: 'md',
+    component: MarkdownComponent,
   },
   {
     path: '**',

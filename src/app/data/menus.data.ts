@@ -67,6 +67,12 @@ const MENU_DATA: Menu[] = [
         link: '/code/javascript',
         description: 'Compila código JavaScript de manera rápida y sencilla',
       },
+      {
+        icon: 'fa-brands fa-markdown',
+        title: 'Markdown',
+        link: '/md',
+        description: 'asdasd',
+      },
     ],
   },
 ];
