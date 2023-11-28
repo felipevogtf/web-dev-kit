@@ -63,7 +63,6 @@ export class MarkdownComponent {
   updateQueryParam(): void {
     const data = btoa(this.code);
     const currentUrl = this.location.path();
-
     const urlSearchParams = new URLSearchParams(
       this.location.path().split('?')[1]
     );
