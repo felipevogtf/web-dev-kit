@@ -35,7 +35,7 @@ export class MarkdownComponent {
   };
 
   private inputEvent: Subject<string> = new Subject<string>();
-  code: string = '';
+  code: string = `# Escribe aqui\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.\n\n## Escribe aqui\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.`;
 
   constructor(
     private location: Location,
@@ -88,7 +88,7 @@ export class MarkdownComponent {
     if (this.code) {
       const blob = new Blob([this.code], { type: 'text/markdown' });
       const url = window.URL.createObjectURL(blob);
-      
+
       const a = document.createElement('a');
       a.href = url;
       a.download = 'data.md';
