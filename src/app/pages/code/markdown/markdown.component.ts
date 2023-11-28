@@ -58,7 +58,6 @@ export class MarkdownComponent {
 
   goBack(): void {
     this.router.navigate(['../']);
-    //this.generateFile();
   }
 
   updateQueryParam(): void {
