@@ -8,6 +8,8 @@ import {
   animate,
   state,
 } from '@angular/animations';
+import MENU_DATA from '../../data/menus.data';
+import { Menu } from '../../models/menu.model';
 
 @Component({
   selector: 'nav-menu',
@@ -35,71 +37,10 @@ import {
 })
 export class NavMenuComponent {
   isToggle: boolean = false;
-
-  menus = [
-    {
-      id: 1,
-      icon: 'fa-solid fa-home',
-      title: 'Inicio',
-      link: '/',
-    },
-    {
-      id: 2,
-      icon: 'fa-solid fa-arrow-right-arrow-left',
-      title: 'Encodode / Decode',
-      toggle: false,
-      childs: [
-        {
-          icon: 'fa-solid fa-arrow-right-arrow-left',
-          title: 'Base 64',
-          link: '/encoding/base64',
-        },
-        {
-          icon: 'fa-solid fa-arrow-right-arrow-left',
-          title: 'Img to Base 64',
-          link: '/encoding/base64image',
-        },
-        {
-          icon: 'fa-solid fa-link',
-          title: 'URL',
-          link: '/encoding/url',
-        },
-      ],
-    },
-    {
-      id: 3,
-      icon: 'fa-solid fa-lock',
-      title: 'Hashing',
-      toggle: false,
-      childs: [
-        {
-          icon: 'fa-solid fa-fingerprint',
-          title: 'Hash',
-          link: '/hashing',
-        },
-        {
-          icon: 'fa-solid fa-key',
-          title: 'HMAC',
-          link: '/hashing/hmac',
-        },
-      ],
-    },
-    {
-      id: 4,
-      icon: 'fa-solid fa-code',
-      title: 'Code',
-      toggle: false,
-      childs: [
-        {
-          icon: 'fa-brands fa-square-js',
-          title: 'Javascript',
-          link: '/code/javascript',
-        },
-      ],
-    },
-  ];
+  menus: Menu[] = MENU_DATA;
 
   constructor(private router: Router) {
+
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.checkRoute();

@@ -1,9 +1,10 @@
 import { ApplicationConfig, importProvidersFrom } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withHashLocation } from '@angular/router';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 import { routes } from './app.routes';
 import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
+import { MarkdownModule } from 'ngx-markdown';
 
 // const monacoConfig: NgxMonacoEditorConfig = {
 //   baseUrl: 'app-name/assets', // configure base path for monaco editor. Starting with version 8.0.0 it defaults to './assets'. Previous releases default to '/assets'
@@ -15,8 +16,8 @@ import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(routes),
-    importProvidersFrom(MonacoEditorModule.forRoot()),
+    provideRouter(routes, withHashLocation()),
+    importProvidersFrom(MonacoEditorModule.forRoot(), MarkdownModule.forRoot()),
     provideAnimationsAsync(),
   ],
 };

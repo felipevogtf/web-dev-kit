@@ -1,0 +1,18 @@
+<nav class="nav">
+  <span> Web Dev Kits</span>
+</nav>
+
+<section class="md-section">
+  <as-split direction="horizontal" class="md-section__container">
+    <as-split-area [size]="50" [minSize]="10">
+      <ngx-monaco-editor
+        class="monaco-editor"
+        [(ngModel)]="code"
+        [options]="editorOptions"
+      ></ngx-monaco-editor>
+    </as-split-area>
+    <as-split-area [size]="50" [minSize]="20">
+      <markdown class="markdown-preview" [data]="code"> </markdown>
+    </as-split-area>
+  </as-split>
+</section>
