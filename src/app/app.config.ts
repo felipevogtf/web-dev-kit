@@ -1,4 +1,4 @@
-import { ApplicationConfig, importProvidersFrom } from '@angular/core';
+import { ApplicationConfig, SecurityContext, importProvidersFrom } from '@angular/core';
 import { provideRouter, withHashLocation } from '@angular/router';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
@@ -17,7 +17,7 @@ import { MarkdownModule } from 'ngx-markdown';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes, withHashLocation()),
-    importProvidersFrom(MonacoEditorModule.forRoot(), MarkdownModule.forRoot()),
+    importProvidersFrom(MonacoEditorModule.forRoot(), MarkdownModule.forRoot({ sanitize: SecurityContext.NONE})),
     provideAnimationsAsync(),
   ],
 };
