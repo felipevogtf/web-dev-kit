@@ -35,7 +35,8 @@ export class MarkdownComponent {
   };
 
   private inputEvent: Subject<string> = new Subject<string>();
-  code: string = `# Escribe aqui\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.\n\n## Escribe aqui\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.`;
+  code: string = `# Ejemplo de Markdown 😊🚀\n\n## Subtítulos y Listas\n\nTexto normal con **énfasis** y *cursiva*.\n\nLista no ordenada \n- Elemento 1 🌟\n- Elemento 2 📚\n  - Elemento anidado 🌿\n\nLista ordenada:\n1. Primer ítem 🥇\n2. Segundo ítem 🎯\n3. Tercer ítem 💡\n\n## Enlaces e Imágenes\n\nEnlaces [como este](https://www.ejemplo.com) 😎🔗.\n\nImágenes ![nombre de imagen](favicon.ico)\n\n## Bloque de Código\n\nBloque de código en JavaScript:\n\`\`\`\nfunction saludar() {\n  console.log('¡Hola, mundo! 🌍');\n}\nsaludar();\n\`\`\`\n\n## Emojis en Texto y Listas de Tareas\n\nAquí hay algunos emojis en el texto: 😄✨🌟.\n\nLista de tareas:\n- [x] Tarea completada ✔️\n- [ ] Tarea pendiente ❌
+`;
 
   constructor(
     private location: Location,
@@ -51,7 +52,9 @@ export class MarkdownComponent {
     this.route.queryParams.subscribe((params) => {
       const data = params['data'];
       if (data) {
-        this.code = atob(data);
+        const decodedData = atob(data);
+        const decodedCode = decodeURIComponent(decodedData);
+        this.code = decodedCode;
       }
     });
   }
@@ -61,7 +64,8 @@ export class MarkdownComponent {
   }
 
   updateQueryParam(): void {
-    const data = btoa(this.code);
+    const encodedCode = encodeURIComponent(this.code);
+    const data = btoa(encodedCode);
     const currentUrl = this.location.path();
     const urlSearchParams = new URLSearchParams(
       this.location.path().split('?')[1]

@@ -1,0 +1,86 @@
+.markdown {
+  /* Estilos para los encabezados */
+  line-height: 1.5;
+  
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-weight: bold;
+    margin-bottom: 0.5em;
+  }
+
+  h1 {
+    font-size: 2em;
+  }
+
+  h2 {
+    font-size: 1.5em;
+  }
+
+  h3 {
+    font-size: 1.17em;
+  }
+
+  /* Estilo para los párrafos */
+  p {
+    margin-bottom: 1em;
+  }
+
+  /* Estilo para enlaces */
+  a {
+    color: #0366d6; /* Color azul similar a los enlaces de GitHub */
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  /* Estilos para listas */
+  ul,
+  ol {
+    margin-bottom: 1em;
+  }
+
+  li {
+    margin-bottom: 0.5em;
+  }
+
+  /* Estilos para bloques de código */
+  pre {
+    background-color: var(
+      --bg-secondary-dark
+    ); /* Color de fondo similar a los bloques de código de GitHub */
+    padding: 16px;
+    border-radius: 6px;
+    overflow-x: auto;
+  }
+
+  code {
+    font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: 85%;
+    color: var(--text-primary);
+  }
+
+  :not(pre) > code {
+    background-color: var(
+      --bg-secondary-dark
+    ); /* Color de fondo similar a los bloques de código de GitHub */
+    padding: 3px 6px;
+    border-radius: 3px;
+    color: var(--text-primary);
+  }
+
+  /* Estilo para bloques de citas */
+  blockquote {
+    margin: 0;
+    padding-left: 1em;
+    border-left: 0.25em solid var(--bg-secondary-dark); /* Color de borde similar a las citas de GitHub */
+    color: var(
+      --text-primary-light
+    ); /* Color de texto similar a las citas de GitHub */
+  }
+}

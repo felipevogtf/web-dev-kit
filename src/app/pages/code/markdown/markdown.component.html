@@ -22,7 +22,12 @@
       ></ngx-monaco-editor>
     </as-split-area>
     <as-split-area [size]="50" [minSize]="20">
-      <markdown class="markdown-preview" [data]="code"> </markdown>
+      <markdown
+        class="markdown"
+        [data]="code"
+        emoji
+      >
+      </markdown>
     </as-split-area>
   </as-split>
 </section>
