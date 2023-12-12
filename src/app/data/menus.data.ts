@@ -71,7 +71,7 @@ const MENU_DATA: Menu[] = [
         icon: 'fa-brands fa-markdown',
         title: 'Markdown',
         link: '/md',
-        description: 'asdasd',
+        description: 'Escribe y visualiza tu texto en Markdown al instante',
       },
     ],
   },
