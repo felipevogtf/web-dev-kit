@@ -1,9 +1,15 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { AngularSplitModule } from 'angular-split';
+import { TextareaComponent } from '../../../components/textarea/textarea.component';
 
 @Component({
   selector: 'app-base64image',
   templateUrl: './base64image.component.html',
   styleUrl: './base64image.component.scss',
+  standalone: true,
+  imports: [CommonModule, FormsModule, TextareaComponent, AngularSplitModule],
 })
 export class Base64imageComponent {
   imageSrc: string | ArrayBuffer | null = null;

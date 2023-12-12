@@ -1,11 +1,24 @@
+import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { AngularSplitModule } from 'angular-split';
+import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
 import { Subject, debounceTime } from 'rxjs';
+import { HtmlViewerComponent } from '../../../components/html-viewer/html-viewer.component';
 
 @Component({
   selector: 'app-javascript',
   templateUrl: './javascript.component.html',
   styleUrl: './javascript.component.scss',
+  standalone: true,
+  imports: [
+    CommonModule,
+    AngularSplitModule,
+    MonacoEditorModule,
+    FormsModule,
+    HtmlViewerComponent,
+  ],
 })
 export class JavascriptComponent {
   editorOptions = {
@@ -34,7 +47,6 @@ export class JavascriptComponent {
     const originalWarn = console.warn;
 
     console.log = (...args) => {
-
       let logHTML = '';
 
       args.forEach((arg) => {
@@ -47,7 +59,6 @@ export class JavascriptComponent {
     };
 
     console.error = (...args) => {
-
       let logHTML = '';
 
       args.forEach((arg) => {
@@ -67,7 +78,7 @@ export class JavascriptComponent {
       });
 
       this.output += logHTML;
-      
+
       originalWarn.apply(console, args);
     };
 
@@ -202,7 +213,6 @@ export class JavascriptComponent {
   }
 
   warnToHTML(value: string) {
-
     let log = '';
 
     if (typeof value === 'object') {
@@ -210,7 +220,6 @@ export class JavascriptComponent {
     } else {
       log = `<span>${value}</span>`;
     }
-
 
     return `
     <div
