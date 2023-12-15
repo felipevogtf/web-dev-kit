@@ -1,11 +1,12 @@
-import { Component } from '@angular/core';
-import { CommonModule, Location } from '@angular/common';
+import { ChangeDetectorRef, Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { AngularSplitModule } from 'angular-split';
 import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
 import { MarkdownModule } from 'ngx-markdown';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Subject, debounceTime } from 'rxjs';
+import { QueryParamsService } from '../../../services/query-params.service';
 
 @Component({
   selector: 'app-markdown',
@@ -35,13 +36,13 @@ export class MarkdownComponent {
   };
 
   private inputEvent: Subject<string> = new Subject<string>();
-  code: string = `# Ejemplo de Markdown 😊🚀\n\n## Subtítulos y Listas\n\nTexto normal con **énfasis** y *cursiva*.\n\nLista no ordenada \n- Elemento 1 🌟\n- Elemento 2 📚\n  - Elemento anidado 🌿\n\nLista ordenada:\n1. Primer ítem 🥇\n2. Segundo ítem 🎯\n3. Tercer ítem 💡\n\n## Enlaces e Imágenes\n\nEnlaces [como este](https://www.ejemplo.com) 😎🔗.\n\nImágenes ![nombre de imagen](favicon.ico)\n\n## Bloque de Código\n\nBloque de código en JavaScript:\n\`\`\`\nfunction saludar() {\n  console.log('¡Hola, mundo! 🌍');\n}\nsaludar();\n\`\`\`\n\n## Emojis en Texto y Listas de Tareas\n\nAquí hay algunos emojis en el texto: 😄✨🌟.\n\nLista de tareas:\n- [x] Tarea completada ✔️\n- [ ] Tarea pendiente ❌
-`;
+  loading: boolean = true;
+  code: string = `# Ejemplo de Markdown 😊🚀\n\n## Subtítulos y Listas\n\nTexto normal con **énfasis** y *cursiva*.\n\nLista no ordenada \n- Elemento 1 🌟\n- Elemento 2 📚\n  - Elemento anidado 🌿\n\nLista ordenada:\n1. Primer ítem 🥇\n2. Segundo ítem 🎯\n3. Tercer ítem 💡\n\n## Enlaces e Imágenes\n\nEnlaces [como este](https://www.ejemplo.com) 😎🔗.\n\nImágenes ![nombre de imagen](favicon.ico)\n\n## Bloque de Código\n\nBloque de código en JavaScript:\n\`\`\`\nfunction saludar() {\n  console.log('¡Hola, mundo! 🌍');\n}\nsaludar();\n\`\`\`\n\n## Emojis en Texto y Listas de Tareas\n\nAquí hay algunos emojis en el texto: 😄✨🌟.\n\nLista de tareas:\n- [x] Tarea completada ✔️\n- [ ] Tarea pendiente ❌`;
 
   constructor(
-    private location: Location,
-    private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private changeDetector: ChangeDetectorRef,
+    private queryParamsService: QueryParamsService
   ) {
     this.inputEvent.pipe(debounceTime(500)).subscribe((value) => {
       this.updateQueryParam();
@@ -49,14 +50,16 @@ export class MarkdownComponent {
   }
 
   ngOnInit() {
-    this.route.queryParams.subscribe((params) => {
-      const data = params['data'];
-      if (data) {
-        const decodedData = atob(data);
-        const decodedCode = decodeURIComponent(decodedData);
-        this.code = decodedCode;
+    this.queryParamsService.getQueryParams('data').subscribe((param) => {
+      if (param) {
+        this.code = param;
       }
     });
+  }
+
+  onMonacoEditorInit(event: any): void {
+    this.loading = false;
+    this.changeDetector.detectChanges();
   }
 
   goBack(): void {
@@ -64,23 +67,7 @@ export class MarkdownComponent {
   }
 
   updateQueryParam(): void {
-    const encodedCode = encodeURIComponent(this.code);
-    const data = btoa(encodedCode);
-    const currentUrl = this.location.path();
-
-    const urlSearchParams = new URLSearchParams(
-      this.location.path().split('?')[1]
-    );
-
-    if (urlSearchParams.has('data')) {
-      urlSearchParams.set('data', data);
-    } else {
-      urlSearchParams.append('data', data);
-    }
-
-    const newUrl = `${currentUrl.split('?')[0]}?${urlSearchParams.toString()}`;
-
-    this.location.go(newUrl);
+    this.queryParamsService.setQueryParam('data', this.code);
   }
 
   save() {

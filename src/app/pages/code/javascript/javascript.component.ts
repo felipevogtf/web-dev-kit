@@ -6,6 +6,7 @@ import { AngularSplitModule } from 'angular-split';
 import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
 import { Subject, debounceTime } from 'rxjs';
 import { HtmlViewerComponent } from '../../../components/html-viewer/html-viewer.component';
+import { QueryParamsService } from '../../../services/query-params.service';
 
 @Component({
   selector: 'app-javascript',
@@ -40,7 +41,8 @@ export class JavascriptComponent {
 
   constructor(
     private sanitizer: DomSanitizer,
-    private changeDetectorRef: ChangeDetectorRef
+    private changeDetectorRef: ChangeDetectorRef,
+    private queryParamsService: QueryParamsService
   ) {
     const originalLog = console.log;
     const originalError = console.error;
@@ -84,12 +86,22 @@ export class JavascriptComponent {
 
     this.codeEvent.pipe(debounceTime(1000)).subscribe((value) => {
       this.play();
+      this.updateQueryParam()
     });
   }
 
   ngOnInit() {
+    this.queryParamsService.getQueryParams('data').subscribe((param) => {
+      this.code = param;
+    });
+
     this.play();
   }
+
+  updateQueryParam(): void {
+    this.queryParamsService.setQueryParam('data', this.code);
+  }
+
 
   executeCode() {
     this.codeEvent.next(this.code);
@@ -133,7 +145,7 @@ export class JavascriptComponent {
         }
       }
     } catch (error: any) {
-      data = this.errorToHTML(error) + '\n';
+      data = this.errorToHTML(error.toString()) + '\n';
     }
 
     return data;

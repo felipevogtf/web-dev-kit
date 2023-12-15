@@ -15,16 +15,19 @@
 <section class="home-content">
   <h2 class="home-content__title">Todas las herramientas</h2>
 
-  <div class="home-content__input input-container">
-    <input
-      id="search"
-      class="input-container__input input"
+  <div class="home-content__input">
+    <custom-input
+      [id]="'search'"
+      [placeholder]="''"
+      [clipboard]="false"
       [(ngModel)]="search"
       (ngModelChange)="filter()"
+      [icon]="'fa-solid fa-magnifying-glass'"
     />
-    <span class="input-container__icon">
+
+    <!-- <span class="input-container__icon">
       <i class="fa-solid fa-magnifying-glass"></i>
-    </span>
+    </span> -->
   </div>
 
   <article class="home-content__tools" [@filterAnimation]="filterItems.length">

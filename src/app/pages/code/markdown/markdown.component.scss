@@ -1,13 +1,32 @@
 .md-section {
   height: calc(100vh - 60px);
   background-color: var(--bg-primary);
+
+  &__editor {
+    background-color: var(--bg-secondary-dark);
+    position: relative;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
 }
 
 .monaco-editor {
+  position: absolute;
   padding: 10px 0px;
   min-height: 100%;
   width: 100%;
   box-sizing: border-box;
+}
+
+.loader {
+  display: block;
+  position: absolute;
+  margin: auto;
+  font-size: 50px;
+  color: var(--color-light-contrast);
 }
 
 .markdown {
@@ -26,8 +45,8 @@
   border-bottom: 1px solid var(--border-primary);
   align-items: center;
   justify-content: space-between;
-  
-  &__title{
+
+  &__title {
     padding: 0px 10px;
   }
 }
