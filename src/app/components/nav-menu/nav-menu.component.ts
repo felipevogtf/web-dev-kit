@@ -76,7 +76,8 @@ export class NavMenuComponent {
 
     closeMenus();
     
-    const routeSearch = this.router.url;
+    const routeSearch = this.router.url.split('?')[0];
+
     const filterMenus = this.menus.filter((menu) => {
       if (menu.link === routeSearch) {
         return true;

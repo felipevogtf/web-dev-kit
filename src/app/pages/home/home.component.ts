@@ -10,6 +10,9 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Menu } from '../../models/menu.model';
 import MENU_DATA from '../../data/menus.data';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { InputComponent } from '../../components/input/input.component';
 
 @Component({
   selector: 'app-home',
@@ -44,6 +47,9 @@ import MENU_DATA from '../../data/menus.data';
       ]),
     ]),
   ],
+
+  standalone: true,
+  imports: [CommonModule, FormsModule, InputComponent],
 })
 export class HomeComponent {
   search: string = '';

@@ -12,22 +12,22 @@
 </nav>
 
 <section class="md-section">
-  <as-split direction="horizontal" class="md-section__container">
+  <as-split direction="horizontal">
     <as-split-area [size]="50" [minSize]="10">
-      <ngx-monaco-editor
-        class="monaco-editor"
-        [(ngModel)]="code"
-        [options]="editorOptions"
-        (ngModelChange)="save()"
-      ></ngx-monaco-editor>
+      <div class="md-section__editor">
+        @if(loading){
+        <span class="loader"><i class="fa-solid fa-code fa-bounce"></i></span>
+        }
+        <ngx-monaco-editor
+          class="monaco-editor"
+          [(ngModel)]="code"
+          [options]="editorOptions"
+          (ngModelChange)="save()"
+        ></ngx-monaco-editor>
+      </div>
     </as-split-area>
     <as-split-area [size]="50" [minSize]="20">
-      <markdown
-        class="markdown"
-        [data]="code"
-        emoji
-      >
-      </markdown>
+      <markdown class="markdown" [data]="code" emoji> </markdown>
     </as-split-area>
   </as-split>
 </section>

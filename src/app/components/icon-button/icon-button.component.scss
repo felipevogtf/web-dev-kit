@@ -1,0 +1,40 @@
+.custom-icon-button {
+  background-color: transparent;
+  border: none;
+  border-radius: 50%;
+
+  height: 50px;
+  width: 50px;
+
+  color: var(--text-primary);
+
+  transition: transform 100ms ease-in, background-color 100ms ease-in,
+    border 100ms ease-in;
+
+  &:hover {
+    cursor: pointer;
+    background-color: var(--bg-secondary-light);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  &--darkhover:hover {
+    background-color: lightgray;
+  }
+
+  &--light {
+    color: var(--color-light);
+  }
+
+  &--light:hover {
+    background-color: var(--color-light-contrast);
+  }
+
+  &--small {
+    font-size: 0.9em;
+    height: 40px;
+    width: 40px;
+  }
+}

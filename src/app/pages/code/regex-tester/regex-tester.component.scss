@@ -1,0 +1,36 @@
+.regex-button {
+  margin-top: 20px;
+  width: 100%;
+  background-color: transparent;
+  border: 5px dashed var(--border-primary);
+  border-radius: var(--base-radius);
+  padding: 20px 0px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  column-gap: 10px;
+
+  transition: border 100ms ease-in;
+
+  &:hover {
+    cursor: pointer;
+    border-color: var(--border-primary--focus);
+  }
+}
+
+.regex-tests {
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+  &__test {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 20px;
+
+    custom-input {
+      width: 100%;
+    }
+  }
+}

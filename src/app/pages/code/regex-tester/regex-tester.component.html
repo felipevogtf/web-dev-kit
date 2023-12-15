@@ -1,0 +1,33 @@
+<section>
+  <h2>Regex Tester</h2>
+
+  <custom-input
+    [formControl]="regex"
+    placeholder="Ingrese expresión regular"
+    (ngModelChange)="setRegex()"
+  ></custom-input>
+
+  <h2>Pruebas</h2>
+
+  <section class="regex-tests">
+    @for (item of regexTests; track $index) {
+    <div class="regex-tests__test">
+      <custom-input
+        [clipboard]="false"
+        [formControl]="item"
+        [icon]="getIcon(item)"
+        (ngModelChange)="setTests()"
+      ></custom-input>
+
+      <icon-button
+        icon="fa-solid fa-trash"
+        (onClick)="removeTest($index)"
+      ></icon-button>
+    </div>
+    }
+  </section>
+  <button (click)="addTest()" class="regex-button" type="button">
+    <i class="fa-solid fa-plus"></i>
+    <span>Añadir prueba</span>
+  </button>
+</section>

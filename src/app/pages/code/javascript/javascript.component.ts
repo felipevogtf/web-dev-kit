@@ -1,11 +1,25 @@
+import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { AngularSplitModule } from 'angular-split';
+import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
 import { Subject, debounceTime } from 'rxjs';
+import { HtmlViewerComponent } from '../../../components/html-viewer/html-viewer.component';
+import { QueryParamsService } from '../../../services/query-params.service';
 
 @Component({
   selector: 'app-javascript',
   templateUrl: './javascript.component.html',
   styleUrl: './javascript.component.scss',
+  standalone: true,
+  imports: [
+    CommonModule,
+    AngularSplitModule,
+    MonacoEditorModule,
+    FormsModule,
+    HtmlViewerComponent,
+  ],
 })
 export class JavascriptComponent {
   editorOptions = {
@@ -27,14 +41,14 @@ export class JavascriptComponent {
 
   constructor(
     private sanitizer: DomSanitizer,
-    private changeDetectorRef: ChangeDetectorRef
+    private changeDetectorRef: ChangeDetectorRef,
+    private queryParamsService: QueryParamsService
   ) {
     const originalLog = console.log;
     const originalError = console.error;
     const originalWarn = console.warn;
 
     console.log = (...args) => {
-
       let logHTML = '';
 
       args.forEach((arg) => {
@@ -47,7 +61,6 @@ export class JavascriptComponent {
     };
 
     console.error = (...args) => {
-
       let logHTML = '';
 
       args.forEach((arg) => {
@@ -67,18 +80,28 @@ export class JavascriptComponent {
       });
 
       this.output += logHTML;
-      
+
       originalWarn.apply(console, args);
     };
 
     this.codeEvent.pipe(debounceTime(1000)).subscribe((value) => {
       this.play();
+      this.updateQueryParam()
     });
   }
 
   ngOnInit() {
+    this.queryParamsService.getQueryParams('data').subscribe((param) => {
+      this.code = param;
+    });
+
     this.play();
   }
+
+  updateQueryParam(): void {
+    this.queryParamsService.setQueryParam('data', this.code);
+  }
+
 
   executeCode() {
     this.codeEvent.next(this.code);
@@ -122,7 +145,7 @@ export class JavascriptComponent {
         }
       }
     } catch (error: any) {
-      data = this.errorToHTML(error) + '\n';
+      data = this.errorToHTML(error.toString()) + '\n';
     }
 
     return data;
@@ -202,7 +225,6 @@ export class JavascriptComponent {
   }
 
   warnToHTML(value: string) {
-
     let log = '';
 
     if (typeof value === 'object') {
@@ -210,7 +232,6 @@ export class JavascriptComponent {
     } else {
       log = `<span>${value}</span>`;
     }
-
 
     return `
     <div

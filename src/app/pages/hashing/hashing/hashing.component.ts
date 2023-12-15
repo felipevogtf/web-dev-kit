@@ -1,9 +1,15 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { MD5, SHA1, SHA256, SHA512 } from 'crypto-js';
+import { InputComponent } from '../../../components/input/input.component';
+import { TextareaComponent } from '../../../components/textarea/textarea.component';
 @Component({
   selector: 'app-hashing',
   templateUrl: './hashing.component.html',
   styleUrl: './hashing.component.scss',
+  standalone: true,
+  imports: [CommonModule, FormsModule, TextareaComponent, InputComponent],
 })
 export class HashingComponent {
   hashText: string = '';
