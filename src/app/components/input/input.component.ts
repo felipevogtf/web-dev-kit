@@ -56,8 +56,8 @@ export class InputComponent implements ControlValueAccessor {
   }
 
   // Métodos requeridos por ControlValueAccessor
-  onChange(_: any): void {}
-  onTouched(): void {}
+  onChange: any = () => {};
+  onTouched: any = () => {};
 
   writeValue(value: any): void {
     this.value = value;
@@ -72,11 +72,13 @@ export class InputComponent implements ControlValueAccessor {
   }
 
   setDisabledState(isDisabled: boolean): void {
-    // Puedes implementar la lógica para el estado deshabilitado si es necesario
+    // Lógica para establecer el estado deshabilitado si es necesario
   }
 
   onInputChange(event: Event) {
-    this.onChange(event);
+    const newValue = (event.target as HTMLInputElement).value;
+    this.value = newValue;
+    this.onChange(newValue);
     this.onTouched();
   }
 }

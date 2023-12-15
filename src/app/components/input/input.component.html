@@ -1,11 +1,11 @@
-<label [for]="id" class="label-container">{{ label }}</label>
+<label [for]="id" class="label-container" [ngClass]="label ? '': 'label-container--hidden'">{{ label }}</label>
 <div class="input-container">
   <input
-    [id]="id"
     class="input-container__area input"
+    [id]="id"
     [placeholder]="placeholder"
-    [(ngModel)]="value"
-    (ngModelChange)="onInputChange($event)"
+    [value]="value"
+    (input)="onInputChange($event)"
     [readOnly]="readonly"
   />
 
