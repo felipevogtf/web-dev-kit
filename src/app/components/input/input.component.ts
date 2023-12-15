@@ -5,15 +5,10 @@ import {
   FormsModule,
   NG_VALUE_ACCESSOR,
 } from '@angular/forms';
-import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { faClipboard } from '@fortawesome/free-regular-svg-icons';
-import { faCheck } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-
 @Component({
   selector: 'custom-input',
   standalone: true,
-  imports: [CommonModule, FormsModule, FontAwesomeModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './input.component.html',
   styleUrl: './input.component.scss',
   providers: [
@@ -29,11 +24,10 @@ export class InputComponent implements ControlValueAccessor {
   @Input() placeholder: string = '';
   @Input() label!: string;
   @Input() readonly: boolean = false;
+  @Input() icon: string = '';
+  @Input() clipboard: boolean = true;
 
   value: string = '';
-
-  iconClip: IconDefinition = faClipboard;
-  iconCheck: IconDefinition = faCheck;
   animationRunning: boolean = false;
 
   constructor() {}
