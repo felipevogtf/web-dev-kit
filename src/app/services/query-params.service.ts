@@ -31,7 +31,7 @@ export class QueryParamsService {
   getQueryParams(key: string): Observable<string> {
     return this.route.queryParams.pipe(
       map((params) => {
-        const data = params['data'];
+        const data = params[key];
         if (data) {
           const decodedData = atob(data);
           const decodedCode = decodeURIComponent(decodedData);

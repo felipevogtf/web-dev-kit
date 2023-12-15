@@ -52,7 +52,7 @@
         <li
           class="nav__item nav__link"
           routerLinkActive="nav__link--active"
-          [routerLinkActiveOptions]="{ exact: true }"
+          [routerLinkActiveOptions]="{ exact: false }"
           [routerLink]="child.link"
         >
           <i [ngClass]="child.icon"></i>{{ child.title }}

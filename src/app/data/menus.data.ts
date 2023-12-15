@@ -73,6 +73,12 @@ const MENU_DATA: Menu[] = [
         link: '/md',
         description: 'Escribe y visualiza tu texto en Markdown al instante',
       },
+      {
+        icon: 'fa-solid fa-wand-magic-sparkles',
+        title: 'Regex Tester',
+        link: '/code/regex',
+        description: 'Testea tus expresiones regulares',
+      },
     ],
   },
 ];
