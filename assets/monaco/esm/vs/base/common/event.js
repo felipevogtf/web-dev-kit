@@ -4,10 +4,13 @@ import { combinedDisposable, Disposable, DisposableStore, toDisposable } from '.
 import { LinkedList } from './linkedList.js';
 import { StopWatch } from './stopwatch.js';
 // -----------------------------------------------------------------------------------------------------------------------
+// Uncomment the next line to print warnings whenever a listener is GC'ed without having been disposed. This is a LEAK.
+// -----------------------------------------------------------------------------------------------------------------------
+const _enableListenerGCedWarning = false;
+// -----------------------------------------------------------------------------------------------------------------------
 // Uncomment the next line to print warnings whenever an emitter with listeners is disposed. That is a sign of code smell.
 // -----------------------------------------------------------------------------------------------------------------------
 const _enableDisposeWithListenerWarning = false;
-// _enableDisposeWithListenerWarning = Boolean("TRUE"); // causes a linter warning so that it cannot be pushed
 // -----------------------------------------------------------------------------------------------------------------------
 // Uncomment the next line to print warnings whenever a snapshotted event is used repeatedly without cleanup.
 // See https://github.com/microsoft/vscode/issues/142851
@@ -490,39 +493,11 @@ export var Event;
         return result.event;
     }
     Event.fromPromise = fromPromise;
-    /**
-     * Adds a listener to an event and calls the listener immediately with undefined as the event object.
-     *
-     * @example
-     * ```
-     * // Initialize the UI and update it when dataChangeEvent fires
-     * runAndSubscribe(dataChangeEvent, () => this._updateUI());
-     * ```
-     */
-    function runAndSubscribe(event, handler) {
-        handler(undefined);
+    function runAndSubscribe(event, handler, initial) {
+        handler(initial);
         return event(e => handler(e));
     }
     Event.runAndSubscribe = runAndSubscribe;
-    /**
-     * Adds a listener to an event and calls the listener immediately with undefined as the event object. A new
-     * {@link DisposableStore} is passed to the listener which is disposed when the returned disposable is disposed.
-     */
-    function runAndSubscribeWithStore(event, handler) {
-        let store = null;
-        function run(e) {
-            store === null || store === void 0 ? void 0 : store.dispose();
-            store = new DisposableStore();
-            handler(e, store);
-        }
-        run(undefined);
-        const disposable = event(e => run(e));
-        return toDisposable(() => {
-            disposable.dispose();
-            store === null || store === void 0 ? void 0 : store.dispose();
-        });
-    }
-    Event.runAndSubscribeWithStore = runAndSubscribeWithStore;
     class EmitterObserver {
         constructor(_observable, store) {
             this._observable = _observable;
@@ -580,7 +555,7 @@ export var Event;
      * Each listener is attached to the observable directly.
      */
     function fromObservableLight(observable) {
-        return (listener) => {
+        return (listener, thisArgs, disposables) => {
             let count = 0;
             let didChange = false;
             const observer = {
@@ -593,7 +568,7 @@ export var Event;
                         observable.reportChanges();
                         if (didChange) {
                             didChange = false;
-                            listener();
+                            listener.call(thisArgs);
                         }
                     }
                 },
@@ -606,11 +581,18 @@ export var Event;
             };
             observable.addObserver(observer);
             observable.reportChanges();
-            return {
+            const disposable = {
                 dispose() {
                     observable.removeObserver(observer);
                 }
             };
+            if (disposables instanceof DisposableStore) {
+                disposables.add(disposable);
+            }
+            else if (Array.isArray(disposables)) {
+                disposables.push(disposable);
+            }
+            return disposable;
         };
     }
     Event.fromObservableLight = fromObservableLight;
@@ -715,6 +697,14 @@ const forEachListener = (listeners, fn) => {
         }
     }
 };
+const _listenerFinalizers = _enableListenerGCedWarning
+    ? new FinalizationRegistry(heldValue => {
+        if (typeof heldValue === 'string') {
+            console.warn('[LEAKING LISTENER] GC\'ed a listener that was NOT yet disposed. This is where is was created:');
+            console.warn(heldValue);
+        }
+    })
+    : undefined;
 /**
  * The Emitter can be used to expose an Event to the public
  * to fire it from the insides.
@@ -818,12 +808,20 @@ export class Emitter {
                 this._listeners.push(contained);
             }
             this._size++;
-            const result = toDisposable(() => { removeMonitor === null || removeMonitor === void 0 ? void 0 : removeMonitor(); this._removeListener(contained); });
+            const result = toDisposable(() => {
+                _listenerFinalizers === null || _listenerFinalizers === void 0 ? void 0 : _listenerFinalizers.unregister(result);
+                removeMonitor === null || removeMonitor === void 0 ? void 0 : removeMonitor();
+                this._removeListener(contained);
+            });
             if (disposables instanceof DisposableStore) {
                 disposables.add(result);
             }
             else if (Array.isArray(disposables)) {
                 disposables.push(result);
+            }
+            if (_listenerFinalizers) {
+                const stack = new Error().stack.split('\n').slice(2).join('\n').trim();
+                _listenerFinalizers.register(result, stack, result);
             }
             return result;
         });
@@ -1095,13 +1093,17 @@ export class EventMultiplexer {
         e.listener = e.event(r => this.emitter.fire(r));
     }
     unhook(e) {
-        if (e.listener) {
-            e.listener.dispose();
-        }
+        var _a;
+        (_a = e.listener) === null || _a === void 0 ? void 0 : _a.dispose();
         e.listener = null;
     }
     dispose() {
+        var _a;
         this.emitter.dispose();
+        for (const e of this.events) {
+            (_a = e.listener) === null || _a === void 0 ? void 0 : _a.dispose();
+        }
+        this.events = [];
     }
 }
 /**

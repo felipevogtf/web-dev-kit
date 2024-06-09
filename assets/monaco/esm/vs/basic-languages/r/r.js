@@ -1,9 +1,10 @@
 /*!-----------------------------------------------------------------------------
  * Copyright (c) Microsoft Corporation. All rights reserved.
- * Version: 0.44.0(3e047efd345ff102c8c61b5398fb30845aaac166)
+ * Version: 0.49.0(383fdf3fc0e1e1a024068b8d0fd4f3dcbae74d04)
  * Released under the MIT license
  * https://github.com/microsoft/monaco-editor/blob/main/LICENSE.txt
  *-----------------------------------------------------------------------------*/
+
 
 // src/basic-languages/r/r.ts
 var conf = {
@@ -172,6 +173,7 @@ var language = {
         }
       ]
     ],
+    // Recognize Roxygen comments
     roxygen: [
       [
         /@\w+/,
@@ -194,10 +196,12 @@ var language = {
       ],
       [/.*/, { token: "comment.doc", next: "@pop" }]
     ],
+    // Recognize positives, negatives, decimals, imaginaries, and scientific notation
     numbers: [
       [/0[xX][0-9a-fA-F]+/, "number.hex"],
       [/-?(\d*\.)?\d+([eE][+\-]?\d+)?/, "number"]
     ],
+    // Recognize operators
     operators: [
       [/<{1,2}-/, "operator"],
       [/->{1,2}/, "operator"],
@@ -210,6 +214,7 @@ var language = {
       [/>>/, "operator"],
       [/[-+=&|!<>^~*/:$]/, "operator"]
     ],
+    // Recognize strings, including those broken across lines
     strings: [
       [/'/, "string.escape", "@stringBody"],
       [/"/, "string.escape", "@dblStringBody"]

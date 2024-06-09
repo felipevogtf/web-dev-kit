@@ -1,5 +1,53 @@
 # Monaco Editor Changelog
 
+## [0.49.0]
+
+- New proposed `editorHoverVerbosityLevel` API
+- New proposed `newSymbolNamesProvider` API
+
+Contributions to `monaco-editor`:
+
+- [@timotheeguerin (Timothee Guerin)](https://github.com/timotheeguerin): Add support for TypeSpec language [PR #4450](https://github.com/microsoft/monaco-editor/pull/4450)
+
+## [0.48.0]
+
+### Additions
+
+- Various bug fixes
+- Minimap Section Headers (see config option `showRegionSectionHeaders`)
+- Diff Editor Gutter Menu (see config option `renderGutterMenu`)
+- `InlineCompletionsProvider.handlePartialAccept` has `PartialAcceptInfo`
+
+Contributions to `monaco-editor`:
+
+- [@jeremy-rifkin (Jeremy Rifkin)](https://github.com/jeremy-rifkin): Fix bug with highlighting of C++ raw string literals [PR #4436](https://github.com/microsoft/monaco-editor/pull/4436)
+
+## [0.47.0]
+
+### Additions
+
+- Bug fixes
+- `registerNewSymbolNameProvider`
+- Experimental `registerInlineEditProvider`
+
+## [0.46.0]
+
+- Bug fixes
+
+## [0.45.0]
+
+### Breaking Changes
+
+- `wordBasedSuggestions: boolean` -> `'off' | 'currentDocument' | 'matchingDocuments' | 'allDocuments'`
+- `occurrencesHighlight: boolean` -> `'off' | 'singleFile' | 'multiFile'`
+
+### Additions
+
+- Many bug fixes
+- `IEditorScrollbarOptions.ignoreHorizontalScrollbarInContentHeight`
+- `IDiffEditor.goToDiff`
+- `IDiffEditor.revealFirstDiff`
+
 ## [0.44.0]
 
 - Removes old diff editor implementation.

@@ -2,32 +2,33 @@
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
 };
 import * as dom from '../../../base/browser/dom.js';
 import { StandardKeyboardEvent } from '../../../base/browser/keyboardEvent.js';
 import { Toggle } from '../../../base/browser/ui/toggle/toggle.js';
-import { Action } from '../../../base/common/actions.js';
 import { equals } from '../../../base/common/arrays.js';
 import { TimeoutTimer } from '../../../base/common/async.js';
 import { Codicon } from '../../../base/common/codicons.js';
 import { Emitter } from '../../../base/common/event.js';
 import { Disposable, DisposableStore } from '../../../base/common/lifecycle.js';
-import { isIOS } from '../../../base/common/platform.js';
+import { isIOS, isMacintosh } from '../../../base/common/platform.js';
 import Severity from '../../../base/common/severity.js';
 import { ThemeIcon } from '../../../base/common/themables.js';
 import './media/quickInput.css';
 import { localize } from '../../../nls.js';
 import { ItemActivation, NO_KEY_MODS, QuickInputHideReason } from '../common/quickInput.js';
-import { QuickInputListFocus } from './quickInputList.js';
-import { getIconClass, renderQuickInputDescription } from './quickInputUtils.js';
+import { quickInputButtonToAction, renderQuickInputDescription } from './quickInputUtils.js';
+import { IConfigurationService } from '../../configuration/common/configuration.js';
+import { IHoverService, WorkbenchHoverDelegate } from '../../hover/browser/hover.js';
+import { QuickInputListFocus } from './quickInputTree.js';
 export const backButton = {
     iconClass: ThemeIcon.asClassName(Codicon.quickInputBack),
     tooltip: localize('quickInput.back', "Back"),
@@ -50,6 +51,7 @@ class QuickInput extends Disposable {
         this._severity = Severity.Ignore;
         this.onDidTriggerButtonEmitter = this._register(new Emitter());
         this.onDidHideEmitter = this._register(new Emitter());
+        this.onWillHideEmitter = this._register(new Emitter());
         this.onDisposeEmitter = this._register(new Emitter());
         this.visibleDisposables = this._register(new DisposableStore());
         this.onDidHide = this.onDidHideEmitter.event;
@@ -182,6 +184,9 @@ class QuickInput extends Disposable {
         this.visibleDisposables.clear();
         this.onDidHideEmitter.fire({ reason });
     }
+    willHide(reason = QuickInputHideReason.Other) {
+        this.onWillHideEmitter.fire({ reason });
+    }
     update() {
         var _a, _b;
         if (!this.visible) {
@@ -226,23 +231,15 @@ class QuickInput extends Disposable {
         if (this.buttonsUpdated) {
             this.buttonsUpdated = false;
             this.ui.leftActionBar.clear();
-            const leftButtons = this.buttons.filter(button => button === backButton);
-            this.ui.leftActionBar.push(leftButtons.map((button, index) => {
-                const action = new Action(`id-${index}`, '', button.iconClass || getIconClass(button.iconPath), true, () => __awaiter(this, void 0, void 0, function* () {
-                    this.onDidTriggerButtonEmitter.fire(button);
-                }));
-                action.tooltip = button.tooltip || '';
-                return action;
-            }), { icon: true, label: false });
+            const leftButtons = this.buttons
+                .filter(button => button === backButton)
+                .map((button, index) => quickInputButtonToAction(button, `id-${index}`, async () => this.onDidTriggerButtonEmitter.fire(button)));
+            this.ui.leftActionBar.push(leftButtons, { icon: true, label: false });
             this.ui.rightActionBar.clear();
-            const rightButtons = this.buttons.filter(button => button !== backButton);
-            this.ui.rightActionBar.push(rightButtons.map((button, index) => {
-                const action = new Action(`id-${index}`, '', button.iconClass || getIconClass(button.iconPath), true, () => __awaiter(this, void 0, void 0, function* () {
-                    this.onDidTriggerButtonEmitter.fire(button);
-                }));
-                action.tooltip = button.tooltip || '';
-                return action;
-            }), { icon: true, label: false });
+            const rightButtons = this.buttons
+                .filter(button => button !== backButton)
+                .map((button, index) => quickInputButtonToAction(button, `id-${index}`, async () => this.onDidTriggerButtonEmitter.fire(button)));
+            this.ui.rightActionBar.push(rightButtons, { icon: true, label: false });
         }
         if (this.togglesUpdated) {
             this.togglesUpdated = false;
@@ -335,7 +332,6 @@ export class QuickPick extends QuickInput {
         this._matchOnLabel = true;
         this._matchOnLabelMode = 'fuzzy';
         this._sortByLabel = true;
-        this._autoFocusOnList = true;
         this._keepScrollPosition = false;
         this._itemActivation = ItemActivation.FIRST;
         this._activeItems = [];
@@ -464,13 +460,6 @@ export class QuickPick extends QuickInput {
         this._sortByLabel = sortByLabel;
         this.update();
     }
-    get autoFocusOnList() {
-        return this._autoFocusOnList;
-    }
-    set autoFocusOnList(autoFocusOnList) {
-        this._autoFocusOnList = autoFocusOnList;
-        this.update();
-    }
     get keepScrollPosition() {
         return this._keepScrollPosition;
     }
@@ -508,6 +497,13 @@ export class QuickPick extends QuickInput {
             return NO_KEY_MODS;
         }
         return this.ui.keyMods;
+    }
+    get valueSelection() {
+        const selection = this.ui.inputBox.getSelection();
+        if (!selection) {
+            return undefined;
+        }
+        return [selection.start, selection.end];
     }
     set valueSelection(valueSelection) {
         this._valueSelection = valueSelection;
@@ -550,10 +546,8 @@ export class QuickPick extends QuickInput {
         this.update();
     }
     trySelectFirst() {
-        if (this.autoFocusOnList) {
-            if (!this.canSelectMany) {
-                this.ui.list.focus(QuickInputListFocus.First);
-            }
+        if (!this.canSelectMany) {
+            this.ui.list.focus(QuickInputListFocus.First);
         }
     }
     show() {
@@ -561,26 +555,31 @@ export class QuickPick extends QuickInput {
             this.visibleDisposables.add(this.ui.inputBox.onDidChange(value => {
                 this.doSetValue(value, true /* skip update since this originates from the UI */);
             }));
-            this.visibleDisposables.add(this.ui.inputBox.onMouseDown(event => {
-                if (!this.autoFocusOnList) {
-                    this.ui.list.clearFocus();
-                }
-            }));
+            // Keybindings for the input box or list if there is no input box
             this.visibleDisposables.add((this._hideInput ? this.ui.list : this.ui.inputBox).onKeyDown((event) => {
                 switch (event.keyCode) {
                     case 18 /* KeyCode.DownArrow */:
-                        this.ui.list.focus(QuickInputListFocus.Next);
+                        // Don't support focusing next separator when quick navigate is enabled
+                        // ref: https://github.com/microsoft/vscode/issues/210461
+                        // TODO: Could we do this in a way that could play nice with quick navigate?
+                        if (this.quickNavigate === undefined && (isMacintosh ? event.metaKey : event.altKey)) {
+                            this.ui.list.focus(QuickInputListFocus.NextSeparator);
+                        }
+                        else {
+                            this.ui.list.focus(QuickInputListFocus.Next);
+                        }
                         if (this.canSelectMany) {
                             this.ui.list.domFocus();
                         }
                         dom.EventHelper.stop(event, true);
                         break;
                     case 16 /* KeyCode.UpArrow */:
-                        if (this.ui.list.getFocusedElements().length) {
-                            this.ui.list.focus(QuickInputListFocus.Previous);
+                        // Don't support focusing next separator when quick navigate is enabled
+                        if (this.quickNavigate === undefined && (isMacintosh ? event.metaKey : event.altKey)) {
+                            this.ui.list.focus(QuickInputListFocus.PreviousSeparator);
                         }
                         else {
-                            this.ui.list.focus(QuickInputListFocus.Last);
+                            this.ui.list.focus(QuickInputListFocus.Previous);
                         }
                         if (this.canSelectMany) {
                             this.ui.list.domFocus();
@@ -671,7 +670,7 @@ export class QuickPick extends QuickInput {
                 this._selectedItems = selectedItems;
                 this.onDidChangeSelectionEmitter.fire(selectedItems);
                 if (selectedItems.length) {
-                    this.handleAccept(event instanceof MouseEvent && event.button === 1 /* mouse middle click */);
+                    this.handleAccept(dom.isMouseEvent(event) && event.button === 1 /* mouse middle click */);
                 }
             }));
             this.visibleDisposables.add(this.ui.list.onChangedCheckedElements(checkedItems => {
@@ -796,6 +795,7 @@ export class QuickPick extends QuickInput {
         this.ui.list.sortByLabel = this.sortByLabel;
         if (this.itemsUpdated) {
             this.itemsUpdated = false;
+            const currentActiveItems = this._activeItems;
             this.ui.list.setElements(this.items);
             this.ui.list.filter(this.filterValue(this.ui.inputBox.value));
             this.ui.checkAll.checked = this.ui.list.getAllVisibleChecked();
@@ -803,6 +803,15 @@ export class QuickPick extends QuickInput {
             this.ui.count.setCount(this.ui.list.getCheckedCount());
             switch (this._itemActivation) {
                 case ItemActivation.NONE:
+                    // Handle the case where we had active items (i.e. someone chose an item)
+                    // but the initial item activation is set to none. Calling clearFocus will
+                    // not trigger the onDidFocus event because when the tree receives new elements,
+                    // it sets the focus to no elements. So we need to set & fire the active items
+                    // accordingly to reflect the state change after setting the items.
+                    if (currentActiveItems.length > 0) {
+                        this._activeItems = [];
+                        this.onDidChangeActiveEmitter.fire(this._activeItems);
+                    }
                     this._itemActivation = ItemActivation.FIRST; // only valid once, then unset
                     break;
                 case ItemActivation.SECOND:
@@ -940,3 +949,31 @@ export class InputBox extends QuickInput {
         }
     }
 }
+let QuickInputHoverDelegate = class QuickInputHoverDelegate extends WorkbenchHoverDelegate {
+    constructor(configurationService, hoverService) {
+        super('element', false, (options) => this.getOverrideOptions(options), configurationService, hoverService);
+    }
+    getOverrideOptions(options) {
+        var _a;
+        // Only show the hover hint if the content is of a decent size
+        const showHoverHint = (options.content instanceof HTMLElement
+            ? (_a = options.content.textContent) !== null && _a !== void 0 ? _a : ''
+            : typeof options.content === 'string'
+                ? options.content
+                : options.content.value).includes('\n');
+        return {
+            persistence: {
+                hideOnKeyDown: false,
+            },
+            appearance: {
+                showHoverHint,
+                skipFadeInAnimation: true,
+            },
+        };
+    }
+};
+QuickInputHoverDelegate = __decorate([
+    __param(0, IConfigurationService),
+    __param(1, IHoverService)
+], QuickInputHoverDelegate);
+export { QuickInputHoverDelegate };

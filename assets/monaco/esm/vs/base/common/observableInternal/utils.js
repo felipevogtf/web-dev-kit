@@ -2,9 +2,11 @@
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { toDisposable } from '../lifecycle.js';
-import { autorun } from './autorun.js';
-import { BaseObservable, ConvenientObservable, getDebugName, getFunctionName, transaction } from './base.js';
+import { Event } from '../event.js';
+import { DisposableStore, toDisposable } from '../lifecycle.js';
+import { BaseObservable, ConvenientObservable, _setKeepObserved, _setRecomputeInitiallyAndOnChange, subtransaction, transaction } from './base.js';
+import { DebugNameData, getFunctionName } from './debugName.js';
+import { derived, derivedOpts } from './derived.js';
 import { getLogger } from './logging.js';
 /**
  * Represents an efficient observable whose value never changes.
@@ -33,29 +35,6 @@ class ConstObservable extends ConvenientObservable {
         return `Const: ${this.value}`;
     }
 }
-export function waitForState(observable, predicate) {
-    return new Promise(resolve => {
-        let didRun = false;
-        let shouldDispose = false;
-        const d = autorun(reader => {
-            /** @description waitForState */
-            const currentState = observable.read(reader);
-            if (predicate(currentState)) {
-                if (!didRun) {
-                    shouldDispose = true;
-                }
-                else {
-                    d.dispose();
-                }
-                resolve(currentState);
-            }
-        });
-        didRun = true;
-        if (shouldDispose) {
-            d.dispose();
-        }
-    });
-}
 export function observableFromEvent(event, getValue) {
     return new FromEventObservable(event, getValue);
 }
@@ -68,12 +47,16 @@ export class FromEventObservable extends BaseObservable {
         this.handleEvent = (args) => {
             var _a;
             const newValue = this._getValue(args);
-            const didChange = !this.hasValue || this.value !== newValue;
-            (_a = getLogger()) === null || _a === void 0 ? void 0 : _a.handleFromEventObservableTriggered(this, { oldValue: this.value, newValue, change: undefined, didChange, hadValue: this.hasValue });
+            const oldValue = this.value;
+            const didChange = !this.hasValue || oldValue !== newValue;
+            let didRunTransaction = false;
             if (didChange) {
                 this.value = newValue;
                 if (this.hasValue) {
-                    transaction((tx) => {
+                    didRunTransaction = true;
+                    subtransaction(FromEventObservable.globalTransaction, (tx) => {
+                        var _a;
+                        (_a = getLogger()) === null || _a === void 0 ? void 0 : _a.handleFromEventObservableTriggered(this, { oldValue, newValue, change: undefined, didChange, hadValue: this.hasValue });
                         for (const o of this.observers) {
                             tx.updateObserver(o, this);
                             o.handleChange(this, undefined);
@@ -84,6 +67,9 @@ export class FromEventObservable extends BaseObservable {
                     });
                 }
                 this.hasValue = true;
+            }
+            if (!didRunTransaction) {
+                (_a = getLogger()) === null || _a === void 0 ? void 0 : _a.handleFromEventObservableTriggered(this, { oldValue, newValue, change: undefined, didChange, hadValue: this.hasValue });
             }
         };
     }
@@ -112,12 +98,29 @@ export class FromEventObservable extends BaseObservable {
         }
         else {
             // no cache, as there are no subscribers to keep it updated
-            return this._getValue(undefined);
+            const value = this._getValue(undefined);
+            return value;
         }
     }
 }
 (function (observableFromEvent) {
     observableFromEvent.Observer = FromEventObservable;
+    function batchEventsGlobally(tx, fn) {
+        let didSet = false;
+        if (FromEventObservable.globalTransaction === undefined) {
+            FromEventObservable.globalTransaction = tx;
+            didSet = true;
+        }
+        try {
+            fn();
+        }
+        finally {
+            if (didSet) {
+                FromEventObservable.globalTransaction = undefined;
+            }
+        }
+    }
+    observableFromEvent.batchEventsGlobally = batchEventsGlobally;
 })(observableFromEvent || (observableFromEvent = {}));
 export function observableSignalFromEvent(debugName, event) {
     return new FromEventObservableSignal(debugName, event);
@@ -158,7 +161,7 @@ export function observableSignal(debugNameOrOwner) {
 class ObservableSignal extends BaseObservable {
     get debugName() {
         var _a;
-        return (_a = getDebugName(this._debugName, undefined, this._owner, this)) !== null && _a !== void 0 ? _a : 'Observable Signal';
+        return (_a = new DebugNameData(this._owner, this._debugName, undefined).getDebugName(this)) !== null && _a !== void 0 ? _a : 'Observable Signal';
     }
     constructor(_debugName, _owner) {
         super();
@@ -182,28 +185,51 @@ class ObservableSignal extends BaseObservable {
     }
 }
 /**
- * This converts the given observable into an autorun.
+ * This makes sure the observable is being observed and keeps its cache alive.
  */
-export function recomputeInitiallyAndOnChange(observable) {
-    const o = new KeepAliveObserver(true);
+export function keepObserved(observable) {
+    const o = new KeepAliveObserver(false, undefined);
     observable.addObserver(o);
-    observable.reportChanges();
     return toDisposable(() => {
         observable.removeObserver(o);
     });
 }
-class KeepAliveObserver {
-    constructor(forceRecompute) {
-        this.forceRecompute = forceRecompute;
-        this.counter = 0;
+_setKeepObserved(keepObserved);
+/**
+ * This converts the given observable into an autorun.
+ */
+export function recomputeInitiallyAndOnChange(observable, handleValue) {
+    const o = new KeepAliveObserver(true, handleValue);
+    observable.addObserver(o);
+    if (handleValue) {
+        handleValue(observable.get());
+    }
+    else {
+        observable.reportChanges();
+    }
+    return toDisposable(() => {
+        observable.removeObserver(o);
+    });
+}
+_setRecomputeInitiallyAndOnChange(recomputeInitiallyAndOnChange);
+export class KeepAliveObserver {
+    constructor(_forceRecompute, _handleValue) {
+        this._forceRecompute = _forceRecompute;
+        this._handleValue = _handleValue;
+        this._counter = 0;
     }
     beginUpdate(observable) {
-        this.counter++;
+        this._counter++;
     }
     endUpdate(observable) {
-        this.counter--;
-        if (this.counter === 0 && this.forceRecompute) {
-            observable.reportChanges();
+        this._counter--;
+        if (this._counter === 0 && this._forceRecompute) {
+            if (this._handleValue) {
+                this._handleValue(observable.get());
+            }
+            else {
+                observable.reportChanges();
+            }
         }
     }
     handlePossibleChange(observable) {
@@ -212,4 +238,97 @@ class KeepAliveObserver {
     handleChange(observable, change) {
         // NO OP
     }
+}
+export function derivedObservableWithWritableCache(owner, computeFn) {
+    let lastValue = undefined;
+    const onChange = observableSignal('derivedObservableWithWritableCache');
+    const observable = derived(owner, reader => {
+        onChange.read(reader);
+        lastValue = computeFn(reader, lastValue);
+        return lastValue;
+    });
+    return Object.assign(observable, {
+        clearCache: (tx) => {
+            lastValue = undefined;
+            onChange.trigger(tx);
+        },
+        setCache: (newValue, tx) => {
+            lastValue = newValue;
+            onChange.trigger(tx);
+        }
+    });
+}
+/**
+ * When the items array changes, referential equal items are not mapped again.
+ */
+export function mapObservableArrayCached(owner, items, map, keySelector) {
+    let m = new ArrayMap(map, keySelector);
+    const self = derivedOpts({
+        debugReferenceFn: map,
+        owner,
+        onLastObserverRemoved: () => {
+            m.dispose();
+            m = new ArrayMap(map);
+        }
+    }, (reader) => {
+        m.setItems(items.read(reader));
+        return m.getItems();
+    });
+    return self;
+}
+class ArrayMap {
+    constructor(_map, _keySelector) {
+        this._map = _map;
+        this._keySelector = _keySelector;
+        this._cache = new Map();
+        this._items = [];
+    }
+    dispose() {
+        this._cache.forEach(entry => entry.store.dispose());
+        this._cache.clear();
+    }
+    setItems(items) {
+        const newItems = [];
+        const itemsToRemove = new Set(this._cache.keys());
+        for (const item of items) {
+            const key = this._keySelector ? this._keySelector(item) : item;
+            let entry = this._cache.get(key);
+            if (!entry) {
+                const store = new DisposableStore();
+                const out = this._map(item, store);
+                entry = { out, store };
+                this._cache.set(key, entry);
+            }
+            else {
+                itemsToRemove.delete(key);
+            }
+            newItems.push(entry.out);
+        }
+        for (const item of itemsToRemove) {
+            const entry = this._cache.get(item);
+            entry.store.dispose();
+            this._cache.delete(item);
+        }
+        this._items = newItems;
+    }
+    getItems() {
+        return this._items;
+    }
+}
+export class ValueWithChangeEventFromObservable {
+    constructor(observable) {
+        this.observable = observable;
+    }
+    get onDidChange() {
+        return Event.fromObservableLight(this.observable);
+    }
+    get value() {
+        return this.observable.get();
+    }
+}
+export function observableFromValueWithChangeEvent(_owner, value) {
+    if (value instanceof ValueWithChangeEventFromObservable) {
+        return value.observable;
+    }
+    return observableFromEvent(value.onDidChange, () => value.value);
 }

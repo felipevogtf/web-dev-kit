@@ -1,11 +1,11 @@
-"use strict";
 /*!-----------------------------------------------------------------------------
  * Copyright (c) Microsoft Corporation. All rights reserved.
- * Version: 0.44.0(3e047efd345ff102c8c61b5398fb30845aaac166)
+ * Version: 0.49.0(383fdf3fc0e1e1a024068b8d0fd4f3dcbae74d04)
  * Released under the MIT license
  * https://github.com/microsoft/monaco-editor/blob/main/LICENSE.txt
  *-----------------------------------------------------------------------------*/
 define("vs/basic-languages/msdax/msdax", ["require"],(require)=>{
+"use strict";
 var moduleExports = (() => {
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -59,6 +59,7 @@ var moduleExports = (() => {
       { open: "(", close: ")", token: "delimiter.parenthesis" }
     ],
     keywords: [
+      // Query keywords
       "VAR",
       "RETURN",
       "NOT",
@@ -73,6 +74,7 @@ var moduleExports = (() => {
       "ASC",
       "DESC",
       "IN",
+      // Datatable types
       "BOOLEAN",
       "DOUBLE",
       "INTEGER",
@@ -81,6 +83,7 @@ var moduleExports = (() => {
       "STRING"
     ],
     functions: [
+      // Relational
       "CLOSINGBALANCEMONTH",
       "CLOSINGBALANCEQUARTER",
       "CLOSINGBALANCEYEAR",
@@ -210,6 +213,7 @@ var moduleExports = (() => {
       "VARX.S",
       "XIRR",
       "XNPV",
+      // Scalar
       "DATE",
       "DATEDIFF",
       "DATEVALUE",

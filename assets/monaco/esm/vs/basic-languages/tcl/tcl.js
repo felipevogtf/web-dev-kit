@@ -1,9 +1,10 @@
 /*!-----------------------------------------------------------------------------
  * Copyright (c) Microsoft Corporation. All rights reserved.
- * Version: 0.44.0(3e047efd345ff102c8c61b5398fb30845aaac166)
+ * Version: 0.49.0(383fdf3fc0e1e1a024068b8d0fd4f3dcbae74d04)
  * Released under the MIT license
  * https://github.com/microsoft/monaco-editor/blob/main/LICENSE.txt
  *-----------------------------------------------------------------------------*/
+
 
 // src/basic-languages/tcl/tcl.ts
 var conf = {
@@ -161,6 +162,7 @@ var language = {
   variables: /(?:\$+(?:(?:\:\:?)?[a-zA-Z_]\w*)+)/,
   tokenizer: {
     root: [
+      // identifiers and keywords
       [
         /[a-zA-Z_]\w*/,
         {
@@ -176,15 +178,20 @@ var language = {
         }
       ],
       [/\s+\-+(?!\d|\.)\w*|{\*}/, "metatag"],
+      // whitespace
       { include: "@whitespace" },
+      // delimiters and operators
       [/[{}()\[\]]/, "@brackets"],
       [/@symbols/, "operator"],
       [/\$+(?:\:\:)?\{/, { token: "identifier", next: "@nestedVariable" }],
       [/@variables/, "type.identifier"],
       [/\.(?!\d|\.)[\w\-]*/, "operator.sql"],
+      // numbers
       [/\d+(\.\d+)?/, "number"],
       [/\d+/, "number"],
+      // delimiter
       [/;/, "delimiter"],
+      // strings
       [/"/, { token: "string.quote", bracket: "@open", next: "@dstring" }],
       [/'/, { token: "string.quote", bracket: "@open", next: "@sstring" }]
     ],

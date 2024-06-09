@@ -10,6 +10,7 @@ import { Emitter } from '../../../common/event.js';
 import './findInput.css';
 import * as nls from '../../../../nls.js';
 import { DisposableStore, MutableDisposable } from '../../../common/lifecycle.js';
+import { createInstantHoverDelegate } from '../hover/hoverDelegateFactory.js';
 const NLS_DEFAULT_LABEL = nls.localize('defaultLabel', "input");
 export class FindInput extends Widget {
     constructor(parent, contextViewProvider, options) {
@@ -57,8 +58,14 @@ export class FindInput extends Widget {
             flexibleMaxHeight,
             inputBoxStyles: options.inputBoxStyles,
         }));
+        const hoverDelegate = this._register(createInstantHoverDelegate());
         if (this.showCommonFindToggles) {
-            this.regex = this._register(new RegexToggle(Object.assign({ appendTitle: appendRegexLabel, isChecked: false }, options.toggleStyles)));
+            this.regex = this._register(new RegexToggle({
+                appendTitle: appendRegexLabel,
+                isChecked: false,
+                hoverDelegate,
+                ...options.toggleStyles
+            }));
             this._register(this.regex.onChange(viaKeyboard => {
                 this._onDidOptionChange.fire(viaKeyboard);
                 if (!viaKeyboard && this.fixFocusOnOptionClickEnabled) {
@@ -69,7 +76,12 @@ export class FindInput extends Widget {
             this._register(this.regex.onKeyDown(e => {
                 this._onRegexKeyDown.fire(e);
             }));
-            this.wholeWords = this._register(new WholeWordsToggle(Object.assign({ appendTitle: appendWholeWordsLabel, isChecked: false }, options.toggleStyles)));
+            this.wholeWords = this._register(new WholeWordsToggle({
+                appendTitle: appendWholeWordsLabel,
+                isChecked: false,
+                hoverDelegate,
+                ...options.toggleStyles
+            }));
             this._register(this.wholeWords.onChange(viaKeyboard => {
                 this._onDidOptionChange.fire(viaKeyboard);
                 if (!viaKeyboard && this.fixFocusOnOptionClickEnabled) {
@@ -77,7 +89,12 @@ export class FindInput extends Widget {
                 }
                 this.validate();
             }));
-            this.caseSensitive = this._register(new CaseSensitiveToggle(Object.assign({ appendTitle: appendCaseSensitiveLabel, isChecked: false }, options.toggleStyles)));
+            this.caseSensitive = this._register(new CaseSensitiveToggle({
+                appendTitle: appendCaseSensitiveLabel,
+                isChecked: false,
+                hoverDelegate,
+                ...options.toggleStyles
+            }));
             this._register(this.caseSensitive.onChange(viaKeyboard => {
                 this._onDidOptionChange.fire(viaKeyboard);
                 if (!viaKeyboard && this.fixFocusOnOptionClickEnabled) {
@@ -92,7 +109,7 @@ export class FindInput extends Widget {
             const indexes = [this.caseSensitive.domNode, this.wholeWords.domNode, this.regex.domNode];
             this.onkeydown(this.domNode, (event) => {
                 if (event.equals(15 /* KeyCode.LeftArrow */) || event.equals(17 /* KeyCode.RightArrow */) || event.equals(9 /* KeyCode.Escape */)) {
-                    const index = indexes.indexOf(document.activeElement);
+                    const index = indexes.indexOf(this.domNode.ownerDocument.activeElement);
                     if (index >= 0) {
                         let newIndex = -1;
                         if (event.equals(17 /* KeyCode.RightArrow */)) {
