@@ -1,18 +1,27 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'icon-button',
+  selector: 'wdk-icon-button',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './icon-button.component.html',
   styleUrl: './icon-button.component.scss',
 })
 export class IconButtonComponent {
-  @Input({ required: true }) icon: string = '';
-  @Output() onClick: EventEmitter<void> = new EventEmitter<void>();
+  @Input() color: 'primary' | 'secondary' | 'tertiary' | 'danger';
+  @Input() size: 'lg' | 'md' | 'sm';
+  @Input() full: boolean;
+  @Input() disabled: boolean;
 
-  onIconButtonClick(): void {
-    this.onClick.emit();
+  constructor() {
+    this.color = 'primary';
+    this.full = false;
+    this.disabled = false;
+    this.size = 'lg';
+  }
+
+  getSizeClass(): string {
+    return `wdk-icon-button--${this.size}`;
   }
 }

@@ -12,7 +12,13 @@ import { Menu } from '../../models/menu.model';
 import MENU_DATA from '../../data/menus.data';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { InputComponent } from '../../components/input/input.component';
+import { InputComponent } from './../../components/input/input.component';
+import { ButtonComponent } from '../../components/button/button.component';
+import { TextareaComponent } from '../../components/textarea/textarea.component';
+import { CopyInputComponent } from '../../components/copy-input/copy-input.component';
+import { CopyTextareaComponent } from '../../components/copy-textarea/copy-textarea.component';
+import { LogoComponent } from '@components/logo/logo.component';
+import { IconButtonComponent } from '@components/icon-button/icon-button.component';
 
 @Component({
   selector: 'app-home',
@@ -49,7 +55,17 @@ import { InputComponent } from '../../components/input/input.component';
   ],
 
   standalone: true,
-  imports: [CommonModule, FormsModule, InputComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    InputComponent,
+    ButtonComponent,
+    TextareaComponent,
+    CopyInputComponent,
+    CopyTextareaComponent,
+    IconButtonComponent,
+    LogoComponent
+  ],
 })
 export class HomeComponent {
   search: string = '';
@@ -76,7 +92,7 @@ export class HomeComponent {
 
   filter() {
     const results = this.submenus.filter(
-      (item) =>
+      item =>
         item.title
           .toLocaleLowerCase()
           .includes(this.search.toLocaleLowerCase()) ||
@@ -88,5 +104,9 @@ export class HomeComponent {
 
   navigate(route?: string) {
     this.router.navigate([route]);
+  }
+
+  test() {
+    console.log('test');
   }
 }

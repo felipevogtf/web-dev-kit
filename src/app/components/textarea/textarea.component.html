@@ -1,28 +1,13 @@
-<label
-  [for]="id"
-  class="label-container"
-  [class.label-container--hidden]="!label"
-  >{{ label }}</label
->
-<div class="textarea-container">
-  <div class="textarea-container__buttons">
-    <button class="icon-button icon-button--small" (click)="copyClipboard()">
-      <i
-        class="icon-button__icon-custom fa-regular fa-clipboard"
-        [class.icon-button__icon--visible]="!animationRunning"
-      ></i>
-      <i
-        class="icon-button__icon-custom fa-solid fa-check"
-        [class.icon-button__icon--visible]="animationRunning"
-      ></i>
-    </button>
-  </div>
+@if (label) {
+  <wdk-label [id]="id" [label]="label"></wdk-label>
+}
+
+<div class="wdk-textarea">
   <textarea
     [id]="id"
-    class="textarea-container__area"
-    rows="10"
     [placeholder]="placeholder"
-    [(ngModel)]="value"
-    (ngModelChange)="onInputChange($event)"
+    [disabled]="disabled"
+    [readonly]="readonly"
+    rows="10"
   ></textarea>
 </div>

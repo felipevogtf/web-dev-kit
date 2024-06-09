@@ -1,0 +1,25 @@
+@if (label) {
+  <wdk-label [id]="id" [label]="label"></wdk-label>
+}
+
+<div
+  class="wdk-copy-input"
+  [class.wdk-input--disabled]="disabled"
+  [class.wdk-input--readonly]="readonly"
+>
+  <ng-content select="[slot='start']"></ng-content>
+  <input
+    type="text"
+    [id]="id"
+    [placeholder]="placeholder"
+    [disabled]="disabled"
+    [readonly]="readonly"
+    [value]="value"
+    (input)="onInputChange($event)"
+  />
+
+  <wdk-button color="tertiary" size="sm" (click)="onCopy()">
+    <i class="fa-regular fa-clipboard"></i>
+  </wdk-button>
+  
+</div>

@@ -1,15 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { InputComponent } from '../../../components/input/input.component';
-import { TextareaComponent } from '../../../components/textarea/textarea.component';
+import { CopyTextareaComponent } from '@components/copy-textarea/copy-textarea.component';
 
 @Component({
   selector: 'app-base64',
   templateUrl: './base64.component.html',
   styleUrl: './base64.component.scss',
   standalone: true,
-  imports: [CommonModule, FormsModule, TextareaComponent, InputComponent],
+  imports: [CommonModule, FormsModule, CopyTextareaComponent],
 })
 export class Base64Component {
   encodeText: string = '';

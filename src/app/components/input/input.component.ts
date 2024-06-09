@@ -1,16 +1,16 @@
-import { Component, Input, forwardRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, Input, forwardRef } from '@angular/core';
 import {
   ControlValueAccessor,
   FormsModule,
   NG_VALUE_ACCESSOR,
 } from '@angular/forms';
+import { LabelComponent } from '@components/label/label.component';
+
 @Component({
-  selector: 'custom-input',
+  selector: 'wdk-input',
   standalone: true,
-  imports: [CommonModule, FormsModule],
-  templateUrl: './input.component.html',
-  styleUrl: './input.component.scss',
+  imports: [CommonModule, LabelComponent, FormsModule],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -18,41 +18,23 @@ import {
       multi: true,
     },
   ],
+  templateUrl: './input.component.html',
+  styleUrl: './input.component.scss',
 })
 export class InputComponent implements ControlValueAccessor {
   @Input() id!: string;
-  @Input() placeholder: string = '';
-  @Input() label!: string;
-  @Input() readonly: boolean = false;
-  @Input() icon: string = '';
-  @Input() clipboard: boolean = true;
+  @Input() placeholder: string;
+  @Input() label: string;
+  @Input() readonly: boolean;
+  @Input() disabled: boolean;
 
   value: string = '';
-  animationRunning: boolean = false;
 
-  constructor() {}
-
-  async copyClipboard() {
-    if (!this.value || this.animationRunning) {
-      return;
-    }
-
-    try {
-      await navigator.clipboard.writeText(this.value);
-      this.changeIcon();
-    } catch (err) {
-      console.error('Failed to copy: ', err);
-    }
-  }
-
-  async changeIcon() {
-    this.animationRunning = true;
-    await this.delay(1000);
-    this.animationRunning = false;
-  }
-
-  delay(ms: number): Promise<void> {
-    return new Promise((resolve) => setTimeout(resolve, ms));
+  constructor() {
+    this.placeholder = '';
+    this.label = '';
+    this.disabled = false;
+    this.readonly = false;
   }
 
   // Métodos requeridos por ControlValueAccessor

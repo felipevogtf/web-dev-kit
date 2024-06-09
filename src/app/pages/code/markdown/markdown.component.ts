@@ -7,6 +7,8 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subject, debounceTime } from 'rxjs';
 import { QueryParamsService } from '../../../services/query-params.service';
+import { LogoComponent } from '@components/logo/logo.component';
+import { IconButtonComponent } from '@components/icon-button/icon-button.component';
 
 @Component({
   selector: 'app-markdown',
@@ -17,6 +19,8 @@ import { QueryParamsService } from '../../../services/query-params.service';
     MonacoEditorModule,
     MarkdownModule,
     FormsModule,
+    LogoComponent,
+    IconButtonComponent,
   ],
   templateUrl: './markdown.component.html',
   styleUrl: './markdown.component.scss',
@@ -44,13 +48,13 @@ export class MarkdownComponent {
     private changeDetector: ChangeDetectorRef,
     private queryParamsService: QueryParamsService
   ) {
-    this.inputEvent.pipe(debounceTime(500)).subscribe((value) => {
+    this.inputEvent.pipe(debounceTime(500)).subscribe(value => {
       this.updateQueryParam();
     });
   }
 
   ngOnInit() {
-    this.queryParamsService.getQueryParams('data').subscribe((param) => {
+    this.queryParamsService.getQueryParams('data').subscribe(param => {
       if (param) {
         this.code = param;
       }

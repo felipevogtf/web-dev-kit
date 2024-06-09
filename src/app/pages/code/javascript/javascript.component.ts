@@ -1,12 +1,21 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  HostListener,
+  ViewChild,
+  ViewChildren,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { AngularSplitModule } from 'angular-split';
+import { AngularSplitModule, SplitComponent } from 'angular-split';
 import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
 import { Subject, debounceTime } from 'rxjs';
-import { HtmlViewerComponent } from '../../../components/html-viewer/html-viewer.component';
-import { QueryParamsService } from '../../../services/query-params.service';
+import { ToolbarComponent } from '@components/toolbar/toolbar.component';
+import { IconButtonComponent } from '@components/icon-button/icon-button.component';
+import { Router } from '@angular/router';
+import { HtmlViewerComponent } from '@components/html-viewer/html-viewer.component';
+import { QueryParamsService } from '@services/query-params.service';
 
 @Component({
   selector: 'app-javascript',
@@ -19,9 +28,13 @@ import { QueryParamsService } from '../../../services/query-params.service';
     MonacoEditorModule,
     FormsModule,
     HtmlViewerComponent,
+    ToolbarComponent,
+    IconButtonComponent,
   ],
 })
 export class JavascriptComponent {
+  @ViewChild('split') splitComponent: SplitComponent | undefined;
+
   editorOptions = {
     theme: 'vs-dark',
     language: 'javascript',
@@ -30,6 +43,7 @@ export class JavascriptComponent {
     fontFamily: 'Cascadia Code, system-ui',
     fontLigatures: true,
     minimap: { enabled: false },
+    wordWrap: 'on',
   };
   code: string = '';
   output: string = '';
@@ -38,11 +52,13 @@ export class JavascriptComponent {
   running: boolean = false;
   animationRunning: boolean = false;
   private codeEvent: Subject<string> = new Subject<string>();
+  private editor: any;
 
   constructor(
     private sanitizer: DomSanitizer,
     private changeDetectorRef: ChangeDetectorRef,
-    private queryParamsService: QueryParamsService
+    private queryParamsService: QueryParamsService,
+    private router: Router
   ) {
     const originalLog = console.log;
     const originalError = console.error;
@@ -51,7 +67,7 @@ export class JavascriptComponent {
     console.log = (...args) => {
       let logHTML = '';
 
-      args.forEach((arg) => {
+      args.forEach(arg => {
         logHTML += this.logToHTML(arg) + '\n';
       });
 
@@ -63,7 +79,7 @@ export class JavascriptComponent {
     console.error = (...args) => {
       let logHTML = '';
 
-      args.forEach((arg) => {
+      args.forEach(arg => {
         logHTML += this.errorToHTML(arg) + '\n';
       });
 
@@ -75,7 +91,7 @@ export class JavascriptComponent {
     console.warn = (...args) => {
       let logHTML = '';
 
-      args.forEach((arg) => {
+      args.forEach(arg => {
         logHTML += this.warnToHTML(arg) + '\n';
       });
 
@@ -84,24 +100,33 @@ export class JavascriptComponent {
       originalWarn.apply(console, args);
     };
 
-    this.codeEvent.pipe(debounceTime(1000)).subscribe((value) => {
+    this.codeEvent.pipe(debounceTime(1000)).subscribe(value => {
       this.play();
-      this.updateQueryParam()
+      this.updateQueryParam();
     });
   }
 
   ngOnInit() {
-    this.queryParamsService.getQueryParams('data').subscribe((param) => {
+    this.queryParamsService.getQueryParams('data').subscribe(param => {
       this.code = param;
     });
 
     this.play();
   }
 
+  ngAfterViewInit() {
+    this.resizeEditor();
+
+    if (this.splitComponent) {
+      this.splitComponent.dragProgress$.subscribe(() => {
+        this.resizeEditor();
+      });
+    }
+  }
+
   updateQueryParam(): void {
     this.queryParamsService.setQueryParam('data', this.code);
   }
-
 
   executeCode() {
     this.codeEvent.next(this.code);
@@ -159,7 +184,7 @@ export class JavascriptComponent {
         flex-direction: row;
         column-gap: 20px;
         padding: 0px 20px;
-        color: var(--color-light-contrast);
+        color: white;
       "
     >
       <i class="fa-solid fa-chevron-right"></i>
@@ -180,17 +205,14 @@ export class JavascriptComponent {
     return `
     <div
       style="
-        margin: 10px 0px;
         display: flex;
         flex-direction: row;
         column-gap: 20px;
         padding: 20px;
-        background-color: var(--color-light);
-        color: var(--color-light-contrast);
-        border-radius: var(--base-radius);
+        background-color: rgb(51, 51, 51);
+        color: white;
       "
     >
-      <i class="fa-solid fa-chevron-right"></i>
       ${log}
     </div>
     `;
@@ -208,17 +230,15 @@ export class JavascriptComponent {
     return `
     <div
       style="
-        margin: 10px 0px;
         display: flex;
-        flex-direction: row;
-        column-gap: 20px;
+        flex-direction: column;
+        gap: 20px;
         padding: 20px;
         background-color: var(--color-danger);
         color: var(--color-danger-contrast);
-        border-radius: var(--base-radius);
       "
     >
-      <i class="fa-solid fa-xmark"></i>
+      <span><i class="fa-solid fa-xmark" style="padding-right: 10px;"></i>Error</span>
       ${log}
     </div>
     `;
@@ -236,17 +256,15 @@ export class JavascriptComponent {
     return `
     <div
       style="
-        margin: 10px 0px;
         display: flex;
-        flex-direction: row;
-        column-gap: 20px;
+        flex-direction: column;
+        gap: 20px;
         padding: 20px;
         background-color: var(--color-warning);
         color: var(--color-warning-contrast);
-        border-radius: var(--base-radius);
       "
     >
-      <i class="fa-solid fa-triangle-exclamation"></i>
+      <span><i class="fa-solid fa-triangle-exclamation" style="padding-right: 10px;"></i>Warn</span>
       ${log}
     </div>
     `;
@@ -259,6 +277,9 @@ export class JavascriptComponent {
   onMonacoEditorInit(event: any): void {
     this.loading = false;
     this.changeDetectorRef.detectChanges();
+
+    this.editor = event;
+    this.resizeEditor();
   }
 
   async copyClipboard() {
@@ -281,6 +302,21 @@ export class JavascriptComponent {
   }
 
   delay(ms: number): Promise<void> {
-    return new Promise((resolve) => setTimeout(resolve, ms));
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  goBack(): void {
+    this.router.navigate(['../']);
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.resizeEditor();
+  }
+
+  resizeEditor() {
+    if (this.editor) {
+      this.editor.layout(); // Reajusta el tamaño del editor
+    }
   }
 }

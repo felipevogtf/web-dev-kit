@@ -1,6 +1,11 @@
 .nav {
   user-select: none;
 
+  &__logo {
+    font-size: 1.5rem;
+    padding: 30px 0px;
+  }
+
   &__menu {
     padding: 0;
     margin: 0;
@@ -20,7 +25,6 @@
   }
 
   &__header {
-    height: 60px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -61,7 +65,9 @@
     flex-direction: row;
     column-gap: 15px;
 
-    transition: transform 100ms ease-in, background-color 100ms ease-in,
+    transition:
+      transform 100ms ease-in,
+      background-color 100ms ease-in,
       border 100ms ease-in;
 
     fa-icon {
@@ -86,6 +92,14 @@
 
 @media screen and (max-width: 600px) {
   .nav {
+
+    &__logo {
+      font-size: 1rem;
+      padding: 0px 20px;
+      margin-left: auto;
+    }
+
+
     &__header {
       display: flex;
       flex-direction: row;

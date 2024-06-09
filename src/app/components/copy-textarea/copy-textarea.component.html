@@ -1,0 +1,22 @@
+@if (label) {
+  <wdk-label [id]="id" [label]="label"></wdk-label>
+}
+
+<div class="wdk-textarea">
+
+  <div class="wdk-textarea__header">
+    <wdk-button color="tertiary" size="sm" (click)="onCopy()">
+      <i class="fa-regular fa-clipboard"></i>
+    </wdk-button>
+  </div>
+
+  <textarea
+    [id]="id"
+    [placeholder]="placeholder"
+    [disabled]="disabled"
+    [readonly]="readonly"
+    rows="10"
+    [value]="value"
+    (input)="onInputChange($event)"
+  ></textarea>
+</div>

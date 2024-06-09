@@ -1,0 +1,31 @@
+.wdk-textarea {
+  box-sizing: border-box;
+
+  border-radius: var(--base-radius);
+  border: solid 1px var(--primary-content);
+  overflow: hidden;
+  background-color: white;
+
+  height: max-content;
+
+  &:focus-within {
+    border-color: var(--primary);
+  }
+
+  &__header{
+    display: flex;
+    flex-direction: row-reverse;
+    padding: 5px;
+    border-bottom: solid 1px var(--primary-content);
+  }
+
+  textarea {
+    padding: 10px 15px;
+    box-sizing: border-box;
+    border: none;
+    outline: none;
+    width: 100%;
+    height: 100%;
+    resize: none;
+  }
+}
