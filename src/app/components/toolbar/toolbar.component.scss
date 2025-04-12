@@ -1,0 +1,21 @@
+.nav {
+  background-color: var(--bg-secondary);
+  height: 60px;
+  display: flex;
+  flex-direction: row;
+  box-sizing: border-box;
+  padding: 10px;
+  border-bottom: 1px solid var(--border-primary);
+  align-items: center;
+  justify-content: space-between;
+
+  &__title {
+    padding: 0px 10px;
+  }
+
+  &__header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+}

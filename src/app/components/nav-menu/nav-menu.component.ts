@@ -8,13 +8,14 @@ import {
   animate,
   state,
 } from '@angular/animations';
-import MENU_DATA from '../../data/menus.data';
-import { Menu } from '../../models/menu.model';
+import { LogoComponent } from '@components/logo/logo.component';
+import MENU_DATA from '@data/menus.data';
+import { Menu } from '@models/menu.model';
 
 @Component({
   selector: 'nav-menu',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, LogoComponent],
   templateUrl: './nav-menu.component.html',
   styleUrl: './nav-menu.component.scss',
   animations: [
@@ -40,8 +41,7 @@ export class NavMenuComponent {
   menus: Menu[] = MENU_DATA;
 
   constructor(private router: Router) {
-
-    this.router.events.subscribe((event) => {
+    this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.checkRoute();
       }
@@ -54,9 +54,7 @@ export class NavMenuComponent {
 
   toggleLink(menu: any) {
     const closeMenus = () => {
-      let menusToggles = this.menus.filter(
-        (item) => item.toggle && item != menu
-      );
+      let menusToggles = this.menus.filter(item => item.toggle && item != menu);
       for (const item of menusToggles) {
         item.toggle = false;
       }
@@ -68,22 +66,22 @@ export class NavMenuComponent {
 
   checkRoute() {
     const closeMenus = () => {
-      let menusToggles = this.menus.filter((item) => item.toggle);
+      let menusToggles = this.menus.filter(item => item.toggle);
       for (const item of menusToggles) {
         item.toggle = false;
       }
     };
 
     closeMenus();
-    
+
     const routeSearch = this.router.url.split('?')[0];
 
-    const filterMenus = this.menus.filter((menu) => {
+    const filterMenus = this.menus.filter(menu => {
       if (menu.link === routeSearch) {
         return true;
       }
       if (menu.childs) {
-        return menu.childs.some((child) => child.link === routeSearch);
+        return menu.childs.some(child => child.link === routeSearch);
       }
       return false;
     });

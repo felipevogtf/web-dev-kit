@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, HostListener, Renderer2 } from '@angular/core';
-import { NavMenuComponent } from '../components/nav-menu/nav-menu.component';
 import { RouterModule } from '@angular/router';
+import { NavMenuComponent } from '@components/nav-menu/nav-menu.component';
 
 @Component({
   selector: 'app-modules',

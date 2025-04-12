@@ -64,7 +64,7 @@ const MENU_DATA: Menu[] = [
       {
         icon: 'fa-brands fa-square-js',
         title: 'Javascript',
-        link: '/code/javascript',
+        link: '/javascript',
         description: 'Compila código JavaScript de manera rápida y sencilla',
       },
       {

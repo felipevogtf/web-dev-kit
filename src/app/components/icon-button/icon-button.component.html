@@ -1,3 +1,10 @@
-<button type="button" class="custom-icon-button" (click)="onIconButtonClick()">
-  <i [ngClass]="icon"></i>
+<button
+  type="button"
+  class="wdk-icon-button"
+  [ngClass]="[color, getSizeClass()]"
+  [disabled]="disabled"
+  [class.wdk-button--full]="full"
+  type="button"
+>
+  <ng-content></ng-content>
 </button>

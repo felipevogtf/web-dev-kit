@@ -1,5 +1,28 @@
 :root {
   /*Redifiniendo variables*/
+
+  // Radius
+  --base-radius: 10px;
+
+  // Primary color
+  --primary: #333;
+  --primary-contrast: #fff;
+  --primary-light: #4d4d4d;
+  --primary-content: #b3b3b3;
+
+  // Secondary color
+  --secondary-light: #e9ecef;
+
+  // Danger color
+  --danger: #ff3a41;
+  --danger-contrast: #ffffff;
+  --danger-light: #ff6d72;
+  --danger-content: #fd9093;
+
+
+
+
+
   --bg-primary: #fafafa;
 
   --bg-secondary: #fff;
@@ -19,11 +42,10 @@
   --base-color-light: #f3f3f3;
   --base-color-dark: rgb(219, 0, 0);
 
-  // Primary color
-  --primary-color: #333;
-  --primary-color-light: #777;
-  --primary-color-contrast: #fff;
-  
+
+
+
+
   --primary-color-dark: rgb(219, 0, 0);
 
   // Secondary color
@@ -33,9 +55,6 @@
 
   // Hover
   --base-hover-color: #fafafa;
-
-  // Radius
-  --base-radius: 5px;
 
   --color-success: #08c552;
   --color-success-contrast: #ffffff;

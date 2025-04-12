@@ -1,0 +1,11 @@
+<button
+  class="wdk-button"
+  [ngClass]="[color, getSizeClass()]"
+  [disabled]="disabled"
+  [class.wdk-button--full]="full"
+  type="button"
+>
+  <ng-content select="[slot='start']"></ng-content>
+  <ng-content></ng-content>
+  <ng-content select="[slot='end']"></ng-content>
+</button>

@@ -1,0 +1,126 @@
+:host(:has(.wdk-button--full)) {
+  width: 100%;
+}
+
+.wdk-button {
+  box-sizing: border-box;
+
+  border-radius: var(--base-radius);
+  border: none;
+  font-weight: 500;
+  min-height: 40px;
+  border: 2px solid currentColor;
+  outline: 2px solid transparent;
+
+  // flex
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  //
+
+  // transitions
+  transition:
+    background-color 300ms ease-out,
+    transform 100ms ease-in,
+    outline-color 100ms ease-in,
+    border-color 100ms ease-in;
+
+  //
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  &:disabled {
+    pointer-events: none;
+    opacity: 0.8;
+  }
+
+  &--full {
+    width: 100%;
+  }
+
+  &--lg {
+    padding: 5px 20px;
+    min-height: 40px;
+    font-size: 1rem;
+  }
+
+  &--md {
+    padding: 5px 15px;
+    min-height: 32px;
+    font-size: 0.9rem;
+  }
+
+  &--sm {
+    padding: 5px 10px;
+    min-height: 24px;
+    font-size: 0.75rem;
+  }
+}
+
+.primary {
+  background-color: var(--primary);
+  border-color: var(--primary);
+
+  color: var(--primary-contrast);
+
+  &:hover {
+    background-color: var(--primary-light);
+    border-color: var(--primary-light);
+  }
+
+  &:focus {
+    outline-color: var(--primary-content);
+  }
+}
+
+.secondary {
+  background-color: transparent;
+  border-color: var(--primary);
+
+  color: var(--secondary-color-contrast);
+
+  &:hover {
+    background-color: var(--secondary-light);
+  }
+
+  &:focus {
+    outline-color: var(--primary-content);
+  }
+}
+
+.tertiary {
+  background-color: transparent;
+  border-color: transparent;
+  color: var(--secondary-color-contrast);
+
+  &:hover {
+    background-color: var(--secondary-light);
+  }
+
+  &:focus {
+    outline-color: var(--primary-content);
+  }
+}
+
+.danger {
+  background-color: var(--danger);
+  border-color: var(--danger);
+  color: var(--danger-contrast);
+
+  &:hover {
+    background-color: var(--danger-light);
+    border-color: var(--danger-light);
+  }
+
+  &:focus {
+    outline-color: var(--danger-content);
+  }
+}

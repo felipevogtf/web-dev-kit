@@ -16,14 +16,14 @@
   <h2 class="home-content__title">Todas las herramientas</h2>
 
   <div class="home-content__input">
-    <custom-input
+    <wdk-input
       [id]="'search'"
       [placeholder]="''"
-      [clipboard]="false"
       [(ngModel)]="search"
       (ngModelChange)="filter()"
-      [icon]="'fa-solid fa-magnifying-glass'"
-    />
+    >
+      <i class="fa-solid fa-magnifying-glass" slot="end"></i>
+    </wdk-input>
 
     <!-- <span class="input-container__icon">
       <i class="fa-solid fa-magnifying-glass"></i>
@@ -32,15 +32,15 @@
 
   <article class="home-content__tools" [@filterAnimation]="filterItems.length">
     @for (tool of filterItems; track $index) {
-    <article class="tool-card" (click)="navigate(tool.link)">
-      <div class="tool-card__icon">
-        <i [ngClass]="tool.icon"></i>
-      </div>
-      <div>
-        <h3 class="tool-card__title">{{ tool.title }}</h3>
-        <p class="tool-card__description">{{ tool.description }}</p>
-      </div>
-    </article>
+      <article class="tool-card" (click)="navigate(tool.link)">
+        <div class="tool-card__icon">
+          <i [ngClass]="tool.icon"></i>
+        </div>
+        <div>
+          <h3 class="tool-card__title">{{ tool.title }}</h3>
+          <p class="tool-card__description">{{ tool.description }}</p>
+        </div>
+      </article>
     }
   </article>
 </section>

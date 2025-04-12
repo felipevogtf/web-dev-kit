@@ -1,22 +1,22 @@
 <nav class="nav">
-  <div>
-    <button class="icon-button" (click)="goBack()">
-      <i class="fa-solid fa-chevron-left"></i>
-    </button>
-    <span class="nav__title"> Web Dev Kits</span>
+  <div class="nav__header">
+    <wdk-icon-button (click)="goBack()" color="tertiary">
+      <i class="fa-solid fa-close"></i>
+    </wdk-icon-button>
+    <span class="nav__title"> <wdk-logo /></span>
   </div>
 
-  <button class="icon-button" (click)="generateFile()">
+  <wdk-icon-button (click)="generateFile()" color="tertiary">
     <i class="fa-solid fa-file-arrow-down"></i>
-  </button>
+  </wdk-icon-button>
 </nav>
 
 <section class="md-section">
   <as-split direction="horizontal">
     <as-split-area [size]="50" [minSize]="10">
       <div class="md-section__editor">
-        @if(loading){
-        <span class="loader"><i class="fa-solid fa-code fa-bounce"></i></span>
+        @if (loading) {
+          <span class="loader"><i class="fa-solid fa-code fa-bounce"></i></span>
         }
         <ngx-monaco-editor
           class="monaco-editor"

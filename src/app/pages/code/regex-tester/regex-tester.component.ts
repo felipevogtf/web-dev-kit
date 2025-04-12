@@ -1,19 +1,19 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { InputComponent } from '../../../components/input/input.component';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
-import { QueryParamsService } from '../../../services/query-params.service';
+import { InputComponent } from '@components/input/input.component';
+import { QueryParamsService } from '@services/query-params.service';
 import { Subject, debounceTime } from 'rxjs';
-import { IconButtonComponent } from '../../../components/icon-button/icon-button.component';
+import { IconButtonComponent } from '@components/icon-button/icon-button.component';
 
 @Component({
   selector: 'app-regex-tester',
   standalone: true,
   imports: [
     CommonModule,
-    InputComponent,
     ReactiveFormsModule,
-    IconButtonComponent,
+    InputComponent,
+    IconButtonComponent
   ],
   templateUrl: './regex-tester.component.html',
   styleUrl: './regex-tester.component.scss',

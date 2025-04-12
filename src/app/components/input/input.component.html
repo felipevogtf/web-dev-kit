@@ -1,32 +1,21 @@
-<label [for]="id" class="label-container" [ngClass]="label ? '': 'label-container--hidden'">{{ label }}</label>
-<div class="input-container">
+@if (label) {
+  <wdk-label [id]="id" [label]="label"></wdk-label>
+}
+
+<div
+  class="wdk-input"
+  [class.wdk-input--disabled]="disabled"
+  [class.wdk-input--readonly]="readonly"
+>
+  <ng-content select="[slot='start']"></ng-content>
   <input
-    class="input-container__area input"
+    type="text"
     [id]="id"
     [placeholder]="placeholder"
+    [disabled]="disabled"
+    [readonly]="readonly"
     [value]="value"
     (input)="onInputChange($event)"
-    [readOnly]="readonly"
   />
-
-  @if(icon){
-  <div class="input-container__icon-container">
-    <span>
-      <i [ngClass]="icon"></i>
-    </span>
-  </div>
-  }
-  <!---->
-  @if(clipboard){
-  <button class="input-container__button icon-button" (click)="copyClipboard()">
-    <i
-      class="icon-button__icon-custom fa-regular fa-clipboard"
-      [class.icon-button__icon--visible]="!animationRunning"
-    ></i>
-    <i
-      class="icon-button__icon-custom fa-solid fa-check"
-      [class.icon-button__icon--visible]="animationRunning"
-    ></i>
-  </button>
-  }
+  <ng-content select="[slot='end']"></ng-content>
 </div>
