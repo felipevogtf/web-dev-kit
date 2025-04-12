@@ -1,0 +1,18 @@
+@if (label) {
+  <wdk-label [id]="id" [label]="label"></wdk-label>
+}
+<div
+  class="wdk-select"
+  [class.wdk-select--disabled]="disabled"
+  [class.wdk-select--readonly]="readonly"
+>
+  <select
+    [id]="id"
+    [disabled]="disabled"
+    [value]="value"
+    (input)="onInputChange($event)"
+  >
+    <option value="" disabled selected>Selecciona una opción</option>
+    <ng-content></ng-content>
+  </select>
+</div>

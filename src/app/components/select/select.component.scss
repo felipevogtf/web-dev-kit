@@ -1,0 +1,51 @@
+:host{
+  width: 100%;
+}
+
+.wdk-select{
+  box-sizing: border-box;
+  height: 40px;
+  width: 100%;
+
+  padding: 8px;
+  
+  border: solid 1px var(--primary-content);
+  outline: 2px solid transparent;
+  border-radius: var(--base-radius);
+  overflow: hidden;
+  background-color: white;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+
+
+  &:focus-within {
+    border-color: var(--primary);
+  }
+
+  &--disabled{
+    opacity: 0.8;
+    pointer-events: none;
+  }
+
+  select{
+    box-sizing: border-box;
+    position: relative;
+    height: 100%;
+    width: 100%;
+    
+    border: none;
+
+    &:focus{
+      outline: none;
+    }
+  }
+  
+  select option{
+    background-color: white;
+    padding: 50px;
+    height: 330px;
+  }
+}
