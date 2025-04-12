@@ -3,7 +3,6 @@ import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'wdk-button',
-  standalone: true,
   imports: [
     CommonModule
   ],

@@ -8,7 +8,6 @@ import { CopyTextareaComponent } from '@components/copy-textarea/copy-textarea.c
   selector: 'app-hashing',
   templateUrl: './hashing.component.html',
   styleUrl: './hashing.component.scss',
-  standalone: true,
   imports: [
     CommonModule,
     FormsModule,

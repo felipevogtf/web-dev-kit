@@ -9,7 +9,6 @@ import {
 
 @Component({
   selector: 'wdk-color-picker',
-  standalone: true,
   imports: [CommonModule],
   templateUrl: './color-picker.component.html',
   styleUrl: './color-picker.component.scss',

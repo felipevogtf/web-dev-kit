@@ -13,7 +13,6 @@ import { SelectComponent } from '@components/select/select.component';
 import { v1, v3, v4, v5 } from 'uuid';
 @Component({
   selector: 'app-uuid',
-  standalone: true,
   imports: [
     CommonModule,
     SelectComponent,

@@ -9,7 +9,6 @@ import { SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'html-viewer',
-  standalone: true,
   imports: [CommonModule, FontAwesomeModule],
   templateUrl: './html-viewer.component.html',
   styleUrl: './html-viewer.component.scss',

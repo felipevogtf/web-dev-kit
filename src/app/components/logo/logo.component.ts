@@ -2,7 +2,6 @@ import { Component, HostBinding } from '@angular/core';
 
 @Component({
   selector: 'wdk-logo',
-  standalone: true,
   imports: [],
   templateUrl: './logo.component.html',
   styleUrl: './logo.component.scss',

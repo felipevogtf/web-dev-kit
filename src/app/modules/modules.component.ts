@@ -7,7 +7,6 @@ import { NavMenuComponent } from '@components/nav-menu/nav-menu.component';
   selector: 'app-modules',
   templateUrl: './modules.component.html',
   styleUrl: './modules.component.scss',
-  standalone: true,
   imports: [CommonModule, NavMenuComponent, RouterModule],
 })
 export class ModulesComponent {

@@ -9,7 +9,6 @@ import { LabelComponent } from '@components/label/label.component';
 
 @Component({
   selector: 'wdk-input',
-  standalone: true,
   imports: [CommonModule, LabelComponent, FormsModule],
   providers: [
     {

@@ -14,7 +14,6 @@ import { Menu } from '@models/menu.model';
 
 @Component({
   selector: 'nav-menu',
-  standalone: true,
   imports: [CommonModule, RouterModule, LogoComponent],
   templateUrl: './nav-menu.component.html',
   styleUrl: './nav-menu.component.scss',

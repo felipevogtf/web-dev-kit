@@ -4,7 +4,6 @@ import { LabelComponent } from '../label/label.component';
 
 @Component({
   selector: 'wdk-textarea',
-  standalone: true,
   imports: [
     CommonModule,
     LabelComponent

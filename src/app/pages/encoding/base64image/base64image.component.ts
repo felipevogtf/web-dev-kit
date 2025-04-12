@@ -8,7 +8,6 @@ import { AngularSplitModule } from 'angular-split';
   selector: 'app-base64image',
   templateUrl: './base64image.component.html',
   styleUrl: './base64image.component.scss',
-  standalone: true,
   imports: [CommonModule, FormsModule, CopyTextareaComponent, AngularSplitModule],
 })
 export class Base64imageComponent {

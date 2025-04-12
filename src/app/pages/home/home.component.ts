@@ -50,14 +50,7 @@ import { ColorPickerComponent } from '@components/color-picker/color-picker.comp
     ]),
   ],
 
-  standalone: true,
-  imports: [
-    CommonModule,
-    FormsModule,
-    LogoComponent,
-    InputComponent,
-    ColorPickerComponent
-  ],
+  imports: [CommonModule, FormsModule, InputComponent, ColorPickerComponent],
 })
 export class HomeComponent {
   search: string = '';

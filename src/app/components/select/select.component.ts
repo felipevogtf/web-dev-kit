@@ -5,7 +5,6 @@ import { LabelComponent } from '@components/label/label.component';
 
 @Component({
   selector: 'wdk-select',
-  standalone: true,
   imports: [
     CommonModule,
     LabelComponent,

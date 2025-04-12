@@ -11,7 +11,6 @@ import { ClipboardService } from '@services/clipboard.service';
 
 @Component({
   selector: 'wdk-copy-textarea',
-  standalone: true,
   imports: [CommonModule, LabelComponent, ButtonComponent, FormsModule],
   providers: [
     {
