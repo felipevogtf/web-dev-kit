@@ -57,6 +57,21 @@ const MENU_DATA: Menu[] = [
   },
   {
     id: 4,
+    icon: 'fa-solid fa-lock',
+    title: 'Generator',
+    toggle: false,
+    childs: [
+      {
+        icon: 'fa-solid fa-fingerprint',
+        title: 'UUID',
+        link: '/generator',
+        description:
+          'Genera códigos HMAC a partir de texto para seguridad avanzada',
+      },
+    ],
+  },
+  {
+    id: 5,
     icon: 'fa-solid fa-code',
     title: 'Code',
     toggle: false,

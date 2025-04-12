@@ -27,6 +27,7 @@ export class InputComponent implements ControlValueAccessor {
   @Input() label: string;
   @Input() readonly: boolean;
   @Input() disabled: boolean;
+  @Input() type: 'text' | 'password' | 'email' | 'number' | 'tel' | 'url';
 
   value: string = '';
 
@@ -35,6 +36,7 @@ export class InputComponent implements ControlValueAccessor {
     this.label = '';
     this.disabled = false;
     this.readonly = false;
+    this.type = 'text';
   }
 
   // Métodos requeridos por ControlValueAccessor
