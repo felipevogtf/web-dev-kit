@@ -14,7 +14,7 @@ import { LogoComponent } from '@components/logo/logo.component';
 import { InputComponent } from '@components/input/input.component';
 import MENU_DATA from '@data/menus.data';
 import { Menu } from '@models/menu.model';
-import { ColorPickerComponent } from '@components/color-picker/color-picker.component';
+
 
 @Component({
   selector: 'app-home',
@@ -49,8 +49,7 @@ import { ColorPickerComponent } from '@components/color-picker/color-picker.comp
       ]),
     ]),
   ],
-
-  imports: [CommonModule, FormsModule, InputComponent, ColorPickerComponent],
+  imports: [CommonModule, FormsModule, InputComponent],
 })
 export class HomeComponent {
   search: string = '';

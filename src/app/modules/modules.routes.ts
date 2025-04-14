@@ -37,6 +37,11 @@ export const modulesRoutes: Routes = [
             m => m.generatorRoutes
           ),
       },
+      {
+        path: 'colors',
+        loadChildren: () =>
+          import('./../pages/colors/colors.route').then(m => m.colorsRoute),
+      },
     ],
   },
 ];

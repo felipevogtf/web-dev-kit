@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 
 @Component({
-  selector: 'wdk-color-picker',
+  selector: 'wasddk-color-picker',
   imports: [CommonModule],
   templateUrl: './color-picker.component.html',
   styleUrl: './color-picker.component.scss',
