@@ -1,0 +1,50 @@
+<section>
+  <h2>Generador de UUID</h2>
+
+  <div class="form-control">
+    <wdk-select
+      label="UUID Version"
+      [id]="'uuid-version'"
+      [(ngModel)]="uuidVersion"
+    >
+      <option value="v1">v1</option>
+      <option value="v3">v3</option>
+      <option value="v4">v4</option>
+      <option value="v5">v5</option>
+    </wdk-select>
+  </div>
+
+  @if (uuidVersion === 'v3' || uuidVersion === 'v5') {
+    <div class="form-control">
+      <wdk-input
+        label="Namespace"
+        [id]="'namespace'"
+        [(ngModel)]="namespace"
+      ></wdk-input>
+    </div>
+  }
+
+  <p class="description">{{ getDescriptions() }}</p>
+
+  <div class="form-control">
+    <wdk-input
+      label="Cantidad"
+      [id]="'quantity'"
+      [formControl]="uuidQuantity"
+      type="number"
+    ></wdk-input>
+  </div>
+
+  <div class="form-button">
+    <wdk-button (click)="generate()" [full]="true">Generar UUID</wdk-button>
+  </div>
+
+  <div class="form-control">
+    <wdk-copy-textarea
+      [id]="'uuids'"
+      [label]="'UUIDs'"
+      [(ngModel)]="uuids"
+      [readonly]="true"
+    />
+  </div>
+</section>

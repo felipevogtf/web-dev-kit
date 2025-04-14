@@ -9,7 +9,6 @@ import { HmacMD5, HmacSHA1, HmacSHA256, HmacSHA512 } from 'crypto-js';
   selector: 'app-hmac',
   templateUrl: './hmac.component.html',
   styleUrl: './hmac.component.scss',
-  standalone: true,
   imports: [
     CommonModule,
     FormsModule,

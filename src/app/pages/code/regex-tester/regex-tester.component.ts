@@ -8,7 +8,6 @@ import { IconButtonComponent } from '@components/icon-button/icon-button.compone
 
 @Component({
   selector: 'app-regex-tester',
-  standalone: true,
   imports: [
     CommonModule,
     ReactiveFormsModule,

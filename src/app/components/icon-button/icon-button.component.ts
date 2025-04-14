@@ -3,7 +3,6 @@ import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'wdk-icon-button',
-  standalone: true,
   imports: [CommonModule],
   templateUrl: './icon-button.component.html',
   styleUrl: './icon-button.component.scss',

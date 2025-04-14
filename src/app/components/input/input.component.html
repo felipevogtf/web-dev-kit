@@ -9,7 +9,7 @@
 >
   <ng-content select="[slot='start']"></ng-content>
   <input
-    type="text"
+    [type]="type"
     [id]="id"
     [placeholder]="placeholder"
     [disabled]="disabled"

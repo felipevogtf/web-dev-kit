@@ -1,0 +1,116 @@
+<section>
+  <h2>Contrast Checker</h2>
+
+  <div class="colors-container">
+    <div class="color-box">
+      <h3>Background color</h3>
+
+      <wdk-copy-input
+        [id]="'backgroundHex'"
+        [label]="'Hex'"
+        [placeholder]="'Hex'"
+        [formControl]="backgroundColorInput"
+        (ngModelChange)="backgroundColorInputChange()"
+        [value]="backgroundColorInputValue"
+      >
+        <i class="fa-regular fa-clipboard" slot="icon"></i>
+      </wdk-copy-input>
+
+      <wdk-color-picker
+        [color]="backgroundColorInput.value"
+        (colorChange)="backgroundColorChange($event)"
+      />
+    </div>
+
+    <div class="color-box">
+      <h3>Text color</h3>
+
+      <wdk-copy-input
+        [id]="'textHex'"
+        [label]="'Hex'"
+        [placeholder]="'Hex'"
+        [formControl]="textColorInput"
+        (ngModelChange)="textColorInputChange()"
+        [value]="textColorInputValue"
+      >
+        <i class="fa-regular fa-clipboard" slot="icon"></i>
+      </wdk-copy-input>
+
+      <wdk-color-picker
+        [color]="textColorInput.value"
+        (colorChange)="textColorChange($event)"
+      />
+    </div>
+  </div>
+
+  <div
+    class="contrast-container"
+    [style.background]="backgroundColor().toRgbString()"
+    [style.color]="textColor().toRgbString()"
+  >
+    <h3>Lorem ipsum dolor, sit amet consectetur adipisicing elit.</h3>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nulla
+      consequatur necessitatibus similique, cum aspernatur reprehenderit velit
+      accusantium est aliquam iusto ducimus laudantium impedit rerum doloremque,
+      mollitia maiores facere quam vero.
+    </p>
+  </div>
+
+  <div class="contrast-ratio-container">
+    <div class="contrast-ratio">
+      <h3>Normal Text</h3>
+      <p>
+        WCAG AA:
+        <span
+          [ngClass]="
+            isNormalAccessibleAA()
+              ? 'contrast-ratio--pass'
+              : 'contrast-ratio--fail'
+          "
+          >{{ isNormalAccessibleAA() }}
+        </span>
+      </p>
+      <p>
+        WCAG AAA:
+        <span
+          [ngClass]="
+            isNormalAccessibleAAA()
+              ? 'contrast-ratio--pass'
+              : 'contrast-ratio--fail'
+          "
+        >
+          {{ isNormalAccessibleAAA() }}
+        </span>
+      </p>
+    </div>
+
+    <div class="contrast-ratio">
+      <h3>Large Text</h3>
+      <p>
+        WCAG AA:
+        <span
+          [ngClass]="
+            isLargeAccessibleAA()
+              ? 'contrast-ratio--pass'
+              : 'contrast-ratio--fail'
+          "
+        >
+          {{ isLargeAccessibleAA() }}
+        </span>
+      </p>
+      <p>
+        WCAG AAA:
+        <span
+          [ngClass]="
+            isLargeAccessibleAAA()
+              ? 'contrast-ratio--pass'
+              : 'contrast-ratio--fail'
+          "
+        >
+          {{ isLargeAccessibleAAA() }}
+        </span>
+      </p>
+    </div>
+  </div>
+</section>

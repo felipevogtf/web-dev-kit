@@ -7,7 +7,6 @@ import { CopyTextareaComponent } from '@components/copy-textarea/copy-textarea.c
   selector: 'app-base64',
   templateUrl: './base64.component.html',
   styleUrl: './base64.component.scss',
-  standalone: true,
   imports: [CommonModule, FormsModule, CopyTextareaComponent],
 })
 export class Base64Component {

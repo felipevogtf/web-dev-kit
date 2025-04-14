@@ -57,6 +57,43 @@ const MENU_DATA: Menu[] = [
   },
   {
     id: 4,
+    icon: 'fa-solid fa-lock',
+    title: 'Generator',
+    toggle: false,
+    childs: [
+      {
+        icon: 'fa-solid fa-fingerprint',
+        title: 'UUID',
+        link: '/generator',
+        description:
+          'Genera códigos HMAC a partir de texto para seguridad avanzada',
+      },
+    ],
+  },
+  {
+    id: 6,
+    icon: 'fa-solid fa-paintbrush',
+    title: 'Colors utils',
+    toggle: false,
+    childs: [
+      {
+        icon: 'fa-solid fa-circle-half-stroke',
+        title: 'Contrast checker',
+        link: '/colors',
+        description:
+          '',
+      },
+      {
+        icon: 'fa-solid fa-palette',
+        title: 'Palette generator',
+        link: '/colors/palette-generator',
+        description:
+          '',
+      },
+    ],
+  },
+  {
+    id: 5,
     icon: 'fa-solid fa-code',
     title: 'Code',
     toggle: false,

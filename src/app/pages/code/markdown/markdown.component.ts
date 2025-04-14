@@ -12,7 +12,6 @@ import { IconButtonComponent } from '@components/icon-button/icon-button.compone
 
 @Component({
   selector: 'app-markdown',
-  standalone: true,
   imports: [
     CommonModule,
     AngularSplitModule,

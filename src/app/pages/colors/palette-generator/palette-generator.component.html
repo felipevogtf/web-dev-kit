@@ -1,0 +1,96 @@
+<section>
+  <h2>Palette generator</h2>
+
+  <div class="color-box">
+    <wdk-copy-input
+      [id]="'backgroundHex'"
+      [label]="'Hex'"
+      [placeholder]="'Hex'"
+      [formControl]="colorInput"
+      (ngModelChange)="colorInputChange()"
+      [value]="colorInputValue"
+    >
+      <i class="fa-regular fa-clipboard" slot="icon"></i>
+    </wdk-copy-input>
+
+    <wdk-color-picker
+      [color]="colorInput.value"
+      (colorChange)="colorChange($event)"
+    />
+  </div>
+
+  <div>
+    <h3>Analogous palette</h3>
+    <div class="color-palette">
+      @for (color of analogousColors(); track $index) {
+        <div
+          class="color-palette__item"
+          [style.background]="color.toRgbString()"
+          [style.color]="getTextColor(color)"
+        >
+          {{ color.toHexString() }}
+        </div>
+      }
+    </div>
+  </div>
+
+  <div>
+    <h3>Complementary palette</h3>
+    <div class="color-palette">
+      @for (color of complementaryColors(); track $index) {
+        <div
+          class="color-palette__item"
+          [style.background]="color.toRgbString()"
+          [style.color]="getTextColor(color)"
+        >
+          {{ color.toHexString() }}
+        </div>
+      }
+    </div>
+  </div>
+
+  <div>
+    <h3>Triadic palette</h3>
+    <div class="color-palette">
+      @for (color of triadicColors(); track $index) {
+        <div
+          class="color-palette__item"
+          [style.background]="color.toRgbString()"
+          [style.color]="getTextColor(color)"
+        >
+          {{ color.toHexString() }}
+        </div>
+      }
+    </div>
+  </div>
+
+  <div>
+    <h3>Tetradic palette</h3>
+    <div class="color-palette">
+      @for (color of tetradicColors(); track $index) {
+        <div
+          class="color-palette__item"
+          [style.background]="color.toRgbString()"
+          [style.color]="getTextColor(color)"
+        >
+          {{ color.toHexString() }}
+        </div>
+      }
+    </div>
+  </div>
+
+  <div>
+    <h3>Monochromatic palette</h3>
+    <div class="color-palette">
+      @for (color of monochromaticColors(); track $index) {
+        <div
+          class="color-palette__item"
+          [style.background]="color.toRgbString()"
+          [style.color]="getTextColor(color)"
+        >
+          {{ color.toHexString() }}
+        </div>
+      }
+    </div>
+  </div>
+</section>

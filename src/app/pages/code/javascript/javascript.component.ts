@@ -21,16 +21,14 @@ import { QueryParamsService } from '@services/query-params.service';
   selector: 'app-javascript',
   templateUrl: './javascript.component.html',
   styleUrl: './javascript.component.scss',
-  standalone: true,
   imports: [
     CommonModule,
     AngularSplitModule,
     MonacoEditorModule,
     FormsModule,
-    HtmlViewerComponent,
     ToolbarComponent,
-    IconButtonComponent,
-  ],
+    IconButtonComponent
+],
 })
 export class JavascriptComponent {
   @ViewChild('split') splitComponent: SplitComponent | undefined;

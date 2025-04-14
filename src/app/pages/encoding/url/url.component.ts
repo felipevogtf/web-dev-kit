@@ -7,7 +7,6 @@ import { CopyTextareaComponent } from '@components/copy-textarea/copy-textarea.c
   selector: 'app-url',
   templateUrl: './url.component.html',
   styleUrl: './url.component.scss',
-  standalone: true,
   imports: [CommonModule, FormsModule, CopyTextareaComponent],
 })
 export class UrlComponent {

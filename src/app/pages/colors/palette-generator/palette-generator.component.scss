@@ -1,0 +1,36 @@
+.color-box {
+  border-radius: 8px;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.color-palette {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  min-height: 100px;
+
+  border: 1px solid var(--border-primary);
+  border-radius: var(--base-radius);
+
+  overflow: hidden;
+
+  &__item:not(:last-child) {
+    border-right: 1px solid var(--border-primary);
+  }
+
+  &__item {
+    display: flex;
+    flex: 1;
+    font-weight: bold;
+    justify-content: center;
+    align-items: flex-end;
+    text-transform: uppercase;
+
+    transition: color 0.3s ease-in-out;
+
+    padding: 10px;
+  }
+}

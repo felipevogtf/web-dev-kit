@@ -9,26 +9,38 @@ export const modulesRoutes: Routes = [
       {
         path: '',
         loadChildren: () =>
-          import('./../pages/home/home.routes').then((m) => m.homeRoutes),
+          import('./../pages/home/home.routes').then(m => m.homeRoutes),
       },
       {
         path: 'encoding',
         loadChildren: () =>
           import('./../pages/encoding/encoding.routes').then(
-            (m) => m.encodingRoutes
+            m => m.encodingRoutes
           ),
       },
       {
         path: 'hashing',
         loadChildren: () =>
           import('./../pages/hashing/hashing.routes').then(
-            (m) => m.hashingRouter
+            m => m.hashingRouter
           ),
       },
       {
         path: 'code',
         loadChildren: () =>
-          import('./../pages/code/code.routes').then((m) => m.codeRoutes),
+          import('./../pages/code/code.routes').then(m => m.codeRoutes),
+      },
+      {
+        path: 'generator',
+        loadChildren: () =>
+          import('./../pages/generator/generator.routes').then(
+            m => m.generatorRoutes
+          ),
+      },
+      {
+        path: 'colors',
+        loadChildren: () =>
+          import('./../pages/colors/colors.route').then(m => m.colorsRoute),
       },
     ],
   },

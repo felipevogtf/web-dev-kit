@@ -1,0 +1,15 @@
+<canvas #canvas width="400" height="300" class="wdk-color-picker"></canvas>
+
+<canvas
+  #paletteCanvas
+  width="20"
+  height="300"
+  class="wdk-base-color-picker"
+></canvas>
+
+<div
+  class="color-display"
+  [style.background]="currentColor"
+  style="height: 200px; margin-top: 20px"
+></div>
+<p>Color seleccionado: {{ currentColor }}</p>

@@ -4,7 +4,6 @@ import { LogoComponent } from '@components/logo/logo.component';
 
 @Component({
   selector: 'wdk-toolbar',
-  standalone: true,
   imports: [
     CommonModule,
     LogoComponent

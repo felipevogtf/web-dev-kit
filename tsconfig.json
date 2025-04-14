@@ -31,7 +31,8 @@
       "@utils/*": ["app/utils/*"],
       "@layout/*": ["app/layout/*"],
       "@components/*": ["app/components/*"],
-    },
+      // "wdk-components": ["../projects/wdk-components/src/public-api.ts"]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
